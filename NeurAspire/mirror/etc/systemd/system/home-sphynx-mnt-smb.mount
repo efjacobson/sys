@@ -1,0 +1,13 @@
+[Unit]
+  Requires=network-online.target
+  After=network-online.service
+
+[Mount]
+  What=//192.168.1.100/smbscratch
+  Where=/home/sphynx/mnt/smb
+  Options=vers=3.0,rw,uid=1000,username=any,password=whatever
+  Type=cifs
+
+[Install]
+  WantedBy=multi-user.target
+
