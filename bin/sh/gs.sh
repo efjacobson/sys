@@ -1,36 +1,37 @@
 #! /bin/bash
 
-work=(
-  'provisioning/docker/environment.sh'
-  'provisioning/docker/vhost.conf.tpl'
-)
+function main() {
+  local work=(
+    'provisioning/docker/environment.sh'
+    'provisioning/docker/vhost.conf.tpl'
+  )
 
-other=(
-  'wtf.test'
-)
+  local other=()
 
-ignores=("${other[@]}" "${work[@]}")
-tmpdir=$(mktemp -d)
+  local moved=()
+  local tmpdir
+  tmpdir=$(mktemp -d)
 
-for ignore in "${ignores[@]}"; do
-  if [ -f "$ignore" ]; then
-    if [[ $(git ls-files "$ignore") ]]; then
+  local ignores=("${other[@]}" "${work[@]}")
+  for ignore in "${ignores[@]}"; do
+    if [[ -f "$ignore" && $(git ls-files "$ignore") ]]; then
       echo "$ignore is tracked, moving"
       mv "$ignore" "$tmpdir"
       git checkout -q "$ignore"
+      moved+=("$ignore")
     fi
-  fi
-done
+  done
 
-git status
+  git status
 
-for ignore in "${ignores[@]}"; do
-  if [ -f "$ignore" ]; then
-    if [[ $(git ls-files "$ignore") ]]; then
+  for ignore in "${moved[@]}"; do
+    if [[ -f "$ignore" && $(git ls-files "$ignore") ]]; then
       echo "$ignore is tracked, moving back"
       mv "$tmpdir/$(basename "$ignore")" "$ignore"
     fi
-  fi
-done
+  done
 
-rm -rf "$tmpdir"
+  rm -rf "$tmpdir"
+}
+
+main
