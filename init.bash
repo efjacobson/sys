@@ -14,7 +14,7 @@ function symlink() {
 }
 
 function main() {
-  hostname=$(hostname)
+  local hostname && hostname=$(hostname)
   if [ "$hostname" != 'WTMZ-TMZ006298' ]; then
     echo "not implemented for $hostname yet"
     exit 1
