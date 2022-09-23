@@ -15,7 +15,6 @@ function main() {
   local ignores=("${other[@]}" "${work[@]}")
   for ignore in "${ignores[@]}"; do
     if [[ -f "$ignore" && $(git ls-files "$ignore") ]]; then
-      echo "$ignore is tracked, moving"
       mv "$ignore" "$tmpdir"
       git checkout -q "$ignore"
       moved+=("$ignore")
@@ -26,7 +25,6 @@ function main() {
 
   for ignore in "${moved[@]}"; do
     if [[ -f "$ignore" && $(git ls-files "$ignore") ]]; then
-      echo "$ignore is tracked, moving back"
       mv "$tmpdir/$(basename "$ignore")" "$ignore"
     fi
   done
