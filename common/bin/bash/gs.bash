@@ -1,18 +1,15 @@
 #! /bin/bash
 
-function main() {
+main() {
+  local other=()
+  local moved=()
+  local tmpdir && tmpdir=$(mktemp -d)
   local work=(
     'provisioning/docker/environment.sh'
     'provisioning/docker/vhost.conf.tpl'
   )
-
-  local other=()
-
-  local moved=()
-  local tmpdir
-  tmpdir=$(mktemp -d)
-
   local ignores=("${other[@]}" "${work[@]}")
+
   for ignore in "${ignores[@]}"; do
     if [[ -f "$ignore" && $(git ls-files "$ignore") ]]; then
       mv "$ignore" "$tmpdir"
