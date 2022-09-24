@@ -118,7 +118,7 @@ main() {
     return
   fi
 
-  sync_files "$hostname"
+  sync_files
   sync_scripts
 
   exit 0
