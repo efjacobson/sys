@@ -51,20 +51,33 @@ sync_file() {
 sync_files() {
   local filesystem && filesystem="$(hostname)"/filesystem
   if [ ! -d "$filesystem" ]; then
-    log_error "$(realpath "$filesystem") is not a directory...\n"
+    log_error "$filesystem is not a directory..."
     return
   fi
 
   find "$(hostname)"/filesystem -type f | while read -r file; do sync_file "$file"; done
 }
 
+user_bin='bin'
+set_user_bin() {
+  if [ 'Geriatrix' == $(hostname) ]; then
+    user_bin='._/bin/path'
+  fi
+}
+
 sync_script() {
+  set_user_bin
   local script="$1"
   local filename && filename=$(basename -- "$script")
   local ext="${filename##*.}"
   local without_ext="${filename//".$ext"/}"
   local to && to="$(realpath "$script")"
-  local from="$HOME/bin/$without_ext"
+  local from="$HOME/$user_bin/$without_ext"
+
+  if [ '' != "$(command -v "$without_ext")" ]; then
+    log_error "skipping $without_ext, you already have one in your path..."
+    return
+  fi
 
   if [ "$(readlink "$from")" == "$to" ]; then
     log "skipping $without_ext, it is already linked"
