@@ -48,7 +48,7 @@ sync_file() {
   log "copied $(basename "$file") to $(dirname "$path")/"
 }
 
-sync_filesystem() {
+sync_files() {
   local filesystem && filesystem="$(hostname)"/filesystem
   if [ ! -d "$filesystem" ]; then
     log_error "$(realpath "$filesystem") is not a directory...\n"
@@ -59,7 +59,6 @@ sync_filesystem() {
 }
 
 sync_script() {
-  local function_name="${FUNCNAME[0]}"
   local script="$1"
   local filename && filename=$(basename -- "$script")
   local ext="${filename##*.}"
@@ -73,10 +72,10 @@ sync_script() {
   fi
 
   ln -s "$to" "$from"
-  log "$function_name(): symlinked $without_ext to $script"
+  log "symlinked $without_ext to $script"
 }
 
-sync_scripts_default() {
+sync_scripts_WTMZ-TMZ006298() {
   for script in ./"$hostname"/bin/*/*; do
     sync_script "$script"
   done
@@ -86,7 +85,7 @@ sync_scripts_default() {
   done
 }
 
-sync_scripts_Geriatrix() {
+sync_scripts_default() {
   all=()
   sources=('common' "$(hostname)")
   for source in "${sources[@]}"; do
@@ -119,14 +118,9 @@ main() {
     return
   fi
 
-  sync_filesystem "$hostname"
-
-  # if [ 'Geriatrix' == "$hostname" ]; then
-  #   sync_script_Geriatrix
-  #   return
-  # fi
-
+  sync_files "$hostname"
   sync_scripts
+
   exit 0
 }
 
