@@ -28,40 +28,6 @@ log() {
   [ "$verbose" == 'true' ] && echo -e "${GREEN}${caller}():${NC} $message"
 }
 
-symlink_script() {
-  local function_name="${FUNCNAME[0]}"
-  local script="$1"
-  local filename && filename=$(basename -- "$script")
-  local ext="${filename##*.}"
-  local without_ext="${filename//".$ext"/}"
-  local to && to="$(realpath "$script")"
-  local from="$HOME/bin/$without_ext"
-
-  local t && t=$(type "$without_ext")
-  if [ "$t" != "$without_ext is $from" ]; then
-    log_error "skipping $(realpath "$script"), there already is a \"$without_ext\" in your path..."
-    return
-  fi
-
-  if [ -f "$from" ]; then
-    if [ "$(readlink "$from")" == "$to" ]; then
-      log "skipping $from, it is already linked to $to"
-      return
-    fi
-    rm "$from"
-  fi
-
-  ln -s "$to" "$from"
-  log "$function_name(): symlinked $without_ext to $script"
-}
-
-sync_scripts() {
-  local type="$1"
-  for script in ./"$type"/bin/*/*; do
-    symlink_script "$script"
-  done
-}
-
 sync_file() {
   local file="$1"
   local search && search="$(hostname)/filesystem"
@@ -92,15 +58,76 @@ sync_filesystem() {
   find "$(hostname)"/filesystem -type f | while read -r file; do sync_file "$file"; done
 }
 
-main() {
-  if [ "$(hostname)" != 'WTMZ-TMZ006298' ]; then
-    log_error "not implemented for $(hostname) yet"
-    exit 1
+sync_script() {
+  local function_name="${FUNCNAME[0]}"
+  local script="$1"
+  local filename && filename=$(basename -- "$script")
+  local ext="${filename##*.}"
+  local without_ext="${filename//".$ext"/}"
+  local to && to="$(realpath "$script")"
+  local from="$HOME/bin/$without_ext"
+
+  if [ "$(readlink "$from")" == "$to" ]; then
+    log "skipping $without_ext, it is already linked"
+    return
   fi
 
-  sync_filesystem
-  sync_scripts common
-  sync_scripts "$(hostname)"
+  ln -s "$to" "$from"
+  log "$function_name(): symlinked $without_ext to $script"
+}
+
+sync_scripts_default() {
+  for script in ./"$hostname"/bin/*/*; do
+    sync_script "$script"
+  done
+
+  for script in ./common/bin/*/*; do
+    sync_script "$script"
+  done
+}
+
+sync_scripts_Geriatrix() {
+  all=()
+  sources=('common' "$(hostname)")
+  for source in "${sources[@]}"; do
+    if [ -d "$source"/bin ]; then
+      mapfile -t new < <(ls -d "$source"/bin/*)
+      all=("${all[@]}" "${new[@]}")
+    fi
+  done
+
+  for shell in "${all[@]}"; do
+    find "$shell" -type f | while read -r script; do sync_script "$script"; done
+  done
+}
+
+sync_scripts() {
+  local fn && fn="sync_scripts_$(hostname)"
+  if [ "$(type -t "$fn")" == 'function' ]; then
+    eval "$fn"
+    return
+  fi
+
+  sync_scripts_default
+}
+
+implemented=('Geriatrix' 'WTMZ-TMZ006298')
+main() {
+  local hostname && hostname=$(hostname)
+  if [[ ! " ${implemented[*]} " =~ " ${hostname} " ]]; then
+    echo "not implemented for $hostname yet"
+    return
+  fi
+
+  sync_filesystem "$hostname"
+
+  # if [ 'Geriatrix' == "$hostname" ]; then
+  #   sync_script_Geriatrix
+  #   return
+  # fi
+
+  sync_scripts
+  exit 0
 }
 
 main
