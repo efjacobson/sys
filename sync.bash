@@ -5,9 +5,11 @@ declare -r RED="${PREFIX}0;31m"
 declare -r NC="${PREFIX}0m"
 declare -r GREEN="${PREFIX}0;32m"
 
+force='false'
 verbose='false'
 while [ $# -gt 0 ]; do
   case "$1" in
+  -f) force='true' ;;
   -v) verbose='true' ;;
   *) ;;
   esac
@@ -34,11 +36,11 @@ sync_file() {
 
   local path="${file//"$search"/}"
   if [ -f "$path" ]; then
-    if [ '' == "$(cmp "$file" "$path")" ]; then
+    if [ "$force" == 'false' ] && [ '' == "$(cmp "$file" "$path")" ]; then
       log "skipping $(basename "$file"), it is identical"
       return
     fi
-    rm "$path"
+    # rm "$path"
   fi
 
   local dir && dir=$(dirname "$file")
@@ -60,8 +62,12 @@ sync_files() {
 
 user_bin='bin'
 set_user_bin() {
-  if [ 'Geriatrix' == $(hostname) ]; then
+  if [ 'Geriatrix' == "$(hostname)" ]; then
     user_bin='._/bin/path'
+    return
+  fi
+  if [ 'NeurAspire' == "$(hostname)" ]; then
+    user_bin='._/bin'
   fi
 }
 
@@ -71,17 +77,22 @@ sync_script() {
   local filename && filename=$(basename -- "$script")
   local ext="${filename##*.}"
   local without_ext="${filename//".$ext"/}"
-  local to && to="$(realpath "$script")"
-  local from="$HOME/$user_bin/$without_ext"
 
-  if [ '' != "$(command -v "$without_ext")" ]; then
+  if [ "$force" == 'false' ] && [ '' != "$(command -v "$without_ext")" ]; then
     log_error "skipping $without_ext, you already have one in your path..."
     return
   fi
 
-  if [ "$(readlink "$from")" == "$to" ]; then
+  local to && to="$(realpath "$script")"
+  local from="$HOME/$user_bin/$without_ext"
+
+  if [ "$force" == 'false' ] && [ "$(readlink "$from")" == "$to" ]; then
     log "skipping $without_ext, it is already linked"
     return
+  fi
+
+  if [ ! -d "$HOME/$user_bin" ]; then
+    mkdir -p "$HOME/$user_bin"
   fi
 
   ln -s "$to" "$from"
@@ -123,7 +134,7 @@ sync_scripts() {
   sync_scripts_default
 }
 
-implemented=('Geriatrix' 'WTMZ-TMZ006298')
+implemented=('NeurAspire' 'Geriatrix' 'WTMZ-TMZ006298')
 main() {
   local hostname && hostname=$(hostname)
   if [[ ! " ${implemented[*]} " =~ " ${hostname} " ]]; then
