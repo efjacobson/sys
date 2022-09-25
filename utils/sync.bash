@@ -31,10 +31,7 @@ log() {
 }
 
 sync_file() {
-  local file="$1"
-  local search && search="$(hostname)/filesystem"
-
-  local path="${file//"$search"/}"
+  local path="$1"
   if [ -f "$path" ]; then
     if [ "$force" == 'false' ] && [ '' == "$(cmp "$file" "$path")" ]; then
       log "skipping $(basename "$file"), it is identical"
@@ -43,21 +40,27 @@ sync_file() {
     # rm "$path"
   fi
 
-  local dir && dir=$(dirname "$file")
+  local dir && dir=$(dirname "$path")
   [ ! -d "$dir" ] && mkdir -p "$dir"
 
-  cp "$file" "$path"
-  log "copied $(basename "$file") to $(dirname "$path")/"
+  # printf '%s' "$(whoami)"
+  # local owner_group=$(stat -c "%U:%G" "$path")
+  if [ "$(whoami):$(whoami)" != "$(stat -c "%U:%G" "$path")" ]; then
+    sudo cp "$file" "$path"
+  else
+    cp "$file" "$path"
+  fi
+  log "copied $(basename "$file") to $dir/"
 }
 
 sync_files() {
-  local filesystem && filesystem="$(hostname)"/filesystem
+  local filesystem && filesystem="$(project_root)/$(hostname)/filesystem"
   if [ ! -d "$filesystem" ]; then
     log_error "$filesystem is not a directory..."
     return
   fi
 
-  find "$(hostname)"/filesystem -type f | while read -r file; do sync_file "$file"; done
+  find "$filesystem" -type f | while read -r file; do sync_file "${file//"$filesystem"/}"; done
 }
 
 user_bin='bin'
@@ -75,11 +78,11 @@ sync_script() {
   set_user_bin
   local script="$1"
   local filename && filename=$(basename -- "$script")
-  local ext="${filename##*.}"
+  local ext && ext="$(get_ext "$script")"
   local without_ext="${filename//".$ext"/}"
 
   if [ "$force" == 'false' ] && [ '' != "$(command -v "$without_ext")" ]; then
-    log_error "skipping $without_ext, you already have one in your path..."
+    log "skipping $without_ext, you already have one in your path..."
     return
   fi
 
@@ -111,7 +114,7 @@ sync_scripts_WTMZ-TMZ006298() {
 
 sync_scripts_default() {
   all=()
-  sources=('common' "$(hostname)")
+  sources=("$(project_root)/common" "$(project_root)/$(hostname)")
   for source in "${sources[@]}"; do
     if [ -d "$source"/bin ]; then
       mapfile -t new < <(ls -d "$source"/bin/*)
@@ -141,6 +144,9 @@ main() {
     echo "not implemented for $hostname yet"
     return
   fi
+
+  shared=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && printf '%s/shared.bash' "$(pwd)")
+  source "$shared"
 
   sync_files
   sync_scripts
