@@ -9,7 +9,7 @@ get_ext() {
 }
 
 project_root() {
-  local me && me="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
-  echo "$(dirname "$me")"
+  local here && here="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+  echo "$(dirname "$here")"
   return 0
 }

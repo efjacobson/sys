@@ -1,0 +1,13 @@
+{
+    "editor.formatOnSave": true,
+    "files.autoSave": "onFocusChange",
+    "workbench.editor.enablePreview": false,
+    "shellcheck.customArgs": [
+        "-x"
+    ],
+    "workbench.startupEditor": "none",
+    "editor.formatOnPaste": true,
+    "editor.fontFamily": "mononoki",
+    "editor.fontSize": 20,
+    "editor.fontLigatures": false
+}

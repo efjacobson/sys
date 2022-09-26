@@ -141,3 +141,6 @@ ex() {
 HISTCONTROL=ignoreboth:erasedups
 
 alias c="clear"
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+export FZF_DEFAULT_OPTS="--preview 'bat --style=numbers --color=always --line-range :500 {} --theme gruvbox-dark'"
