@@ -4,7 +4,6 @@ main() {
   local branch && branch=$(git symbolic-ref --short HEAD)
   local toplevel && toplevel=$(git rev-parse --show-toplevel)
   if [[ $toplevel == *"efjacobson"* ]]; then
-    [ -f .nvmrc ] && nvm use "$(cat .nvmrc)"
     git push origin "$branch"
     exit 0
   fi
@@ -20,7 +19,7 @@ main() {
     exit 1
   fi
 
-  [ -f .nvmrc ] && nvm use "$(cat .nvmrc)"
+  [ -f .nvmrc ] && source "$(brew --prefix nvm)/nvm.sh" && nvm use
 
   git push origin "$branch"
 }
