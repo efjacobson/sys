@@ -42,7 +42,7 @@ sync_file() {
   local dir && dir=$(dirname "$to")
   [ ! -d "$dir" ] && mkdir -p "$dir"
 
-  if [ "$(whoami)$(whoami)" != "$(ls -l "${to}" | awk -F " " '{print $3$4}')" ]; then
+  if [ "$(whoami)$(id -g -n "$(whoami)")" != "$(ls -l "${to}" | awk -F " " '{print $3$4}')" ]; then
     sudo cp "$from" "$to"
   else
     cp "$from" "$to"
@@ -93,6 +93,10 @@ set_user_bin() {
   fi
   if [ 'NeurAspire' == "$(hostname)" ]; then
     user_bin='._/bin'
+    return
+  fi
+  if [ 'WTMZ-TMZ006298' == "$(hostname)" ]; then
+    user_bin='bin'
   fi
 }
 
