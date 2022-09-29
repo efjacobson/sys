@@ -42,7 +42,14 @@ sync_file() {
   local dir && dir=$(dirname "$to")
   [ ! -d "$dir" ] && mkdir -p "$dir"
 
-  if [ "$(whoami)$(id -g -n "$(whoami)")" != "$(ls -l "${to}" | awk -F " " '{print $3$4}')" ]; then
+  local usergroup
+  if $is_WTMZ; then
+    usergroup=$(ls -l "${to}" | awk -F " " '{print $4$5}')
+  else
+    usergroup=$(ls -l "${to}" | awk -F " " '{print $3$4}')
+  fi
+
+  if [ "$(whoami)$(id -g -n "$(whoami)")" != "$usergroup" ]; then
     sudo cp "$from" "$to"
   else
     cp "$from" "$to"
@@ -164,12 +171,31 @@ sync_scripts() {
   sync_scripts_default
 }
 
+is_Geriatrix=false
+is_NeurAspire=false
+is_WTMZ=false
+set_identity() {
+  if [ 'Geriatrix' == "$(hostname)" ]; then
+    is_Geriatrix=true
+    return
+  fi
+  if [ 'NeurAspire' == "$(hostname)" ]; then
+    is_NeurAspire=true
+    return
+  fi
+  if [ 'WTMZ-TMZ006298' == "$(hostname)" ]; then
+    is_WTMZ=true
+  fi
+}
+
 main() {
   local implemented=('NeurAspire' 'Geriatrix' 'WTMZ-TMZ006298')
   local hostname && hostname=$(hostname)
   if [[ ! " ${implemented[*]} " =~ " ${hostname} " ]]; then
     echo "not implemented for $hostname yet"
     exit 0
+  else
+    set_identity
   fi
 
   shared=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && printf '%s/shared.bash' "$(pwd)")

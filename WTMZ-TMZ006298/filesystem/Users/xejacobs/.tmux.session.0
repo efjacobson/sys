@@ -2,11 +2,16 @@ new-window
 set -g pane-border-status top
 set -g mouse on
 
-split-window -h -p 33
+split-window -v -p 85
 select-pane -t 0
+send-keys -t 0 "glances" C-m
+
+select-pane -t 1
+split-window -h -p 33
+select-pane -t 1
 split-window -h
 split-window -v
-select-pane -t 1
+select-pane -t 2
 
 unbind C-b
 set-option -g prefix C-d
