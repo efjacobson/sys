@@ -1,0 +1,87 @@
+#! /bin/bash
+
+vendor='tmz'
+env='test'
+region='us-west-2'
+admin=false
+docker=true
+
+display_help() {
+  echo "
+Available options:
+  --vendor    Vendor name [default=tmz]
+  --env       Environment name [default=test]
+  --region    Region name [default=us-west-2]
+  --admin     Use admin creds
+  --nodocker  Don't spin up docker
+  --help      This message
+"
+}
+
+for opt in "$@"; do
+  case ${opt} in
+  --vendor=*)
+    vendor=${opt#*=}
+    ;;
+  --env=*)
+    env=${opt#*=}
+    ;;
+  --region=*)
+    region=${opt#*=}
+    ;;
+  --admin)
+    admin=true
+    ;;
+  --nodocker)
+    docker=false
+    ;;
+  --help)
+    display_help
+    exit
+    ;;
+  *)
+    display_help
+    exit
+    ;;
+  esac
+done
+
+main() {
+  rm "$HOME/.aws/$vendor-docker"
+  if ${admin}; then
+    key_id=$(sed -n '1 p' <"$HOME/.aws/wb-tmz-eric.jacobson")
+    access_key=$(sed -n '2 p' <"$HOME/.aws/wb-tmz-eric.jacobson")
+    cat <<EOF >"/Users/xejacobs/.aws/$vendor-docker"
+[default]
+aws_access_key_id=$key_id
+aws_secret_access_key=$access_key
+EOF
+  else
+    cp "$HOME/.aws/BY_ENV/$vendor-docker-$env-$region" "/Users/xejacobs/.aws/$vendor-docker"
+    key_id_search='aws_access_key_id='
+    key_id_line="$(ggrep "$key_id_search" <"$HOME/.aws/$vendor-docker")"
+    key_id=$(echo "$key_id_line" | sed "s/$key_id_search//")
+
+    access_key_search='aws_secret_access_key='
+    access_key_line="$(ggrep "$access_key_search" <"$HOME/.aws/$vendor-docker")"
+    access_key=$(echo "$access_key_line" | sed "s/$access_key_search//")
+  fi
+
+  aws configure --profile "$vendor-docker" set aws_access_key_id "$key_id"
+  aws configure --profile "$vendor-docker" set aws_secret_access_key "$access_key"
+
+  if ${admin}; then
+    echo 'with great power comes great respronsitrillitrance'
+  else
+    echo "copied $env $region creds for $vendor"
+  fi
+
+  if ! ${docker}; then
+    echo "copied $env $region creds for $vendor"
+    exit 0
+  fi
+
+  dcud --region="$region"
+}
+
+main
