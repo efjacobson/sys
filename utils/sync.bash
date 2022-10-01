@@ -5,12 +5,12 @@ declare -r RED="${PREFIX}0;31m"
 declare -r NC="${PREFIX}0m"
 declare -r GREEN="${PREFIX}0;32m"
 
-force='false'
-verbose='false'
+force=false
+verbose=false
 while [ $# -gt 0 ]; do
   case "$1" in
-  -f) force='true' ;;
-  -v) verbose='true' ;;
+  -f) force=true ;;
+  -v) verbose=true ;;
   *) ;;
   esac
   shift
@@ -27,30 +27,54 @@ log() {
   local message="$1"
   local caller="${FUNCNAME[1]}"
 
-  [ "$verbose" == 'true' ] && echo -e "${GREEN}${caller}():${NC} $message"
+  $verbose && echo -e "${GREEN}${caller}():${NC} $message"
 }
 
 sync_file() {
-  local path="$1"
-  if [ -f "$path" ]; then
-    if [ "$force" == 'false' ] && [ '' == "$(cmp "$file" "$path")" ]; then
-      log "skipping $(basename "$file"), it is identical"
-      return
-    fi
-    # rm "$path"
+  local from="$1"
+  local to="$2"
+
+  if ! $force && [ -f "$to" ] && [ '' == "$(cmp "$from" "$to")" ]; then
+    log "skipping $(basename "$from"), it is identical"
+    return
   fi
 
-  local dir && dir=$(dirname "$path")
+  local dir && dir=$(dirname "$to")
   [ ! -d "$dir" ] && mkdir -p "$dir"
 
-  # printf '%s' "$(whoami)"
-  # local owner_group=$(stat -c "%U:%G" "$path")
-  if [ "$(whoami):$(whoami)" != "$(stat -c "%U:%G" "$path")" ]; then
-    sudo cp "$file" "$path"
+  local usergroup
+  if $is_WTMZ; then
+    usergroup=$(ls -l "${to}" | awk -F " " '{print $4$5}')
   else
-    cp "$file" "$path"
+    usergroup=$(ls -l "${to}" | awk -F " " '{print $3$4}')
   fi
-  log "copied $(basename "$file") to $dir/"
+
+  if [ "$(whoami)$(id -g -n "$(whoami)")" != "$usergroup" ]; then
+    sudo cp "$from" "$to"
+  else
+    cp "$from" "$to"
+  fi
+  log "copied $(basename "$from") to $dir/"
+}
+
+sync_files_reverse() {
+  local files=()
+  case "$(hostname)" in
+  NeurAspire)
+    files+=("$HOME/.config/Code - OSS/User/settings.json")
+    ;;
+  *) ;;
+  esac
+
+  if [ 0 == ${#files[@]} ]; then
+    return
+  fi
+
+  local to
+  for from in "${files[@]}"; do
+    to="$(project_root)/$(hostname)/filesystem${from}"
+    sync_file "$from" "$to"
+  done
 }
 
 sync_files() {
@@ -60,17 +84,26 @@ sync_files() {
     return
   fi
 
-  find "$filesystem" -type f | while read -r file; do sync_file "${file//"$filesystem"/}"; done
+  find "$filesystem" -type f | while read -r _file; do sync_file "$_file" "${_file//"$filesystem"/}"; done
+
+  sync_files_reverse
 }
 
-user_bin='bin'
+user_bin=false
 set_user_bin() {
+  if [ false != $user_bin ]; then
+    return
+  fi
   if [ 'Geriatrix' == "$(hostname)" ]; then
     user_bin='._/bin/path'
     return
   fi
   if [ 'NeurAspire' == "$(hostname)" ]; then
     user_bin='._/bin'
+    return
+  fi
+  if [ 'WTMZ-TMZ006298' == "$(hostname)" ]; then
+    user_bin='bin'
   fi
 }
 
@@ -81,7 +114,7 @@ sync_script() {
   local ext && ext="$(get_ext "$script")"
   local without_ext="${filename//".$ext"/}"
 
-  if [ "$force" == 'false' ] && [ '' != "$(command -v "$without_ext")" ]; then
+  if ! $force && [ '' != "$(command -v "$without_ext")" ]; then
     log "skipping $without_ext, you already have one in your path..."
     return
   fi
@@ -89,7 +122,7 @@ sync_script() {
   local to && to="$(realpath "$script")"
   local from="$HOME/$user_bin/$without_ext"
 
-  if [ "$force" == 'false' ] && [ "$(readlink "$from")" == "$to" ]; then
+  if ! $force && [ "$(readlink "$from")" == "$to" ]; then
     log "skipping $without_ext, it is already linked"
     return
   fi
@@ -98,6 +131,7 @@ sync_script() {
     mkdir -p "$HOME/$user_bin"
   fi
 
+  $force && rm "$from"
   ln -s "$to" "$from"
   log "symlinked $without_ext to $script"
 }
@@ -137,12 +171,31 @@ sync_scripts() {
   sync_scripts_default
 }
 
-implemented=('NeurAspire' 'Geriatrix' 'WTMZ-TMZ006298')
+is_Geriatrix=false
+is_NeurAspire=false
+is_WTMZ=false
+set_identity() {
+  if [ 'Geriatrix' == "$(hostname)" ]; then
+    is_Geriatrix=true
+    return
+  fi
+  if [ 'NeurAspire' == "$(hostname)" ]; then
+    is_NeurAspire=true
+    return
+  fi
+  if [ 'WTMZ-TMZ006298' == "$(hostname)" ]; then
+    is_WTMZ=true
+  fi
+}
+
 main() {
+  local implemented=('NeurAspire' 'Geriatrix' 'WTMZ-TMZ006298')
   local hostname && hostname=$(hostname)
   if [[ ! " ${implemented[*]} " =~ " ${hostname} " ]]; then
     echo "not implemented for $hostname yet"
-    return
+    exit 0
+  else
+    set_identity
   fi
 
   shared=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && printf '%s/shared.bash' "$(pwd)")
@@ -150,6 +203,8 @@ main() {
 
   sync_files
   sync_scripts
+
+  echo -e "${GREEN}${FUNCNAME[0]}():${NC} finished run with force:$force, verbose:$verbose"
 
   exit 0
 }
