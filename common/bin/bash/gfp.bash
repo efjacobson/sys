@@ -6,7 +6,7 @@ main() {
   if [ '' == "$pull_argument" ]; then
     pull_argument='--no-rebase'
   fi
-  git pull origin "$(git symbolic-ref --short HEAD)" "$1"
+  git pull origin "$(git symbolic-ref --short HEAD)" "$pull_argument"
 }
 
 main "$1"

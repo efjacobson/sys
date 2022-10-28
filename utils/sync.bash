@@ -43,13 +43,15 @@ sync_file() {
   [ ! -d "$dir" ] && mkdir -p "$dir"
 
   local usergroup
-  if $is_WTMZ; then
-    usergroup=$(ls -l "${to}" | awk -F " " '{print $4$5}')
-  else
-    usergroup=$(ls -l "${to}" | awk -F " " '{print $3$4}')
+  if [ -f "${to}" ]; then
+    if $is_WTMZ; then
+      usergroup=$(ls -l "${to}" | awk -F " " '{print $4$5}')
+    else
+      usergroup=$(ls -l "${to}" | awk -F " " '{print $3$4}')
+    fi
   fi
 
-  if [ "$(whoami)$(id -g -n "$(whoami)")" != "$usergroup" ]; then
+  if [ '' != "$usergroup" ] && [ "$(whoami)$(id -g -n "$(whoami)")" != "$usergroup" ]; then
     sudo cp "$from" "$to"
   else
     cp "$from" "$to"

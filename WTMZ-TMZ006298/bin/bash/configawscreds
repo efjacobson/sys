@@ -76,12 +76,12 @@ EOF
     echo "copied $env $region creds for $vendor"
   fi
 
-  if ! ${docker}; then
-    echo "copied $env $region creds for $vendor"
-    exit 0
-  fi
+  # if ! ${docker}; then
+  #   echo "copied $env $region creds for $vendor"
+  #   exit 0
+  # fi
 
-  dcud --region="$region"
+  # dcud --region="$region"
 }
 
 main
