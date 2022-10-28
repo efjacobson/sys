@@ -114,24 +114,27 @@ sync_script() {
   local ext && ext="$(get_ext "$script")"
   local without_ext="${filename//".$ext"/}"
 
-  if ! $force && [ '' != "$(command -v "$without_ext")" ]; then
-    log "skipping $without_ext, you already have one in your path..."
-    return
-  fi
+  # if ! $force && [ '' != "$(command -v "$without_ext")" ]; then
+  #   log "skipping $without_ext, you already have one in your path..."
+  #   return
+  # fi
 
   local to && to="$(realpath "$script")"
   local from="$HOME/$user_bin/$without_ext"
-
-  if ! $force && [ "$(readlink "$from")" == "$to" ]; then
-    log "skipping $without_ext, it is already linked"
-    return
+  if [ -f "$from" ]; then
+    rm "$from"
   fi
+
+  # if ! $force && [ "$(readlink "$from")" == "$to" ]; then
+  #   log "skipping $without_ext, it is already linked"
+  #   return
+  # fi
 
   if [ ! -d "$HOME/$user_bin" ]; then
     mkdir -p "$HOME/$user_bin"
   fi
 
-  $force && rm "$from"
+  # $force && rm "$from"
   ln -s "$to" "$from"
   log "symlinked $without_ext to $script"
 }
