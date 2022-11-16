@@ -16,6 +16,14 @@ while [ $# -gt 0 ]; do
   shift
 done
 
+reverse_sync_files=()
+case "$(hostname)" in
+NeurAspire)
+  reverse_sync_files+=("$HOME/.config/Code - OSS/User/settings.json")
+  ;;
+*) ;;
+esac
+
 log_error() {
   local message="$1"
   local caller="${FUNCNAME[1]}"
@@ -34,44 +42,29 @@ sync_file() {
   local from="$1"
   local to="$2"
 
-  if ! $force && [ -f "$to" ] && [ '' == "$(cmp "$from" "$to")" ]; then
-    log "skipping $(basename "$from"), it is identical"
-    return
-  fi
+  for i in "${reverse_sync_files[@]}"; do
+    if [ "$i" == "$to" ]; then
+      return
+    fi
+  done
 
   local dir && dir=$(dirname "$to")
   [ ! -d "$dir" ] && mkdir -p "$dir"
 
-  local usergroup
-  if $is_WTMZ; then
-    usergroup=$(ls -l "${to}" | awk -F " " '{print $4$5}')
+  if [ ! "$(cp "$from" "$to")" ]; then
+    log "copied $(basename "$from") to $dir/"
   else
-    usergroup=$(ls -l "${to}" | awk -F " " '{print $3$4}')
+    log_error "FAILED copying $(basename "$from") to $dir/"
   fi
-
-  if [ "$(whoami)$(id -g -n "$(whoami)")" != "$usergroup" ]; then
-    sudo cp "$from" "$to"
-  else
-    cp "$from" "$to"
-  fi
-  log "copied $(basename "$from") to $dir/"
 }
 
 sync_files_reverse() {
-  local files=()
-  case "$(hostname)" in
-  NeurAspire)
-    files+=("$HOME/.config/Code - OSS/User/settings.json")
-    ;;
-  *) ;;
-  esac
-
-  if [ 0 == ${#files[@]} ]; then
+  if [ 0 == ${#reverse_sync_files[@]} ]; then
     return
   fi
 
   local to
-  for from in "${files[@]}"; do
+  for from in "${reverse_sync_files[@]}"; do
     to="$(project_root)/$(hostname)/filesystem${from}"
     sync_file "$from" "$to"
   done
