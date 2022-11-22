@@ -41,9 +41,6 @@ for opt in "$@"; do
   -l | --labels)
     append='issues/labels/'
     ;;
-  -f | --flagset)
-    append='releases/'
-    ;;
   -w=* | --where=*)
     where="${opt#*=}"
     ;;
