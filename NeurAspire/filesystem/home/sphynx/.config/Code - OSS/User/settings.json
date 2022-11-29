@@ -8,6 +8,9 @@
     "workbench.startupEditor": "none",
     "editor.formatOnPaste": true,
     "editor.fontFamily": "mononoki",
-    "editor.fontSize": 20,
-    "editor.fontLigatures": false
+    "editor.fontLigatures": false,
+    "workbench.colorTheme": "SynthWave '84",
+    "editor.fontSize": 18,
+    "window.zoomLevel": 1,
+    "workbench.activityBar.visible": false
 }
