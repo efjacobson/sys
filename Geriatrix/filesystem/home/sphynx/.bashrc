@@ -141,3 +141,14 @@ ex() {
 HISTCONTROL=ignoreboth:erasedups
 
 alias c="clear"
+
+[ -z "$SSH_AUTH_SOCK" ] && eval "$(ssh-agent -s)"
+
+command -v fzf &>/dev/null && {
+	[ -f ~/.fzf.bash ] && source ~/.fzf.bash && echo 'sourced ~/.fzf.bash'
+	[ -f ~/.fzf.completion.bash ] && source ~/.fzf.completion.bash && echo 'sourced ~/.fzf.completion.bash'
+	[ -f ~/.fzf.key-bindings.bash ] && source ~/.fzf.key-bindings.bash && echo 'sourced ~/.fzf.key-bindings.bash'
+	export FZF_DEFAULT_OPTS="--preview 'bat --style=numbers --color=always --line-range :500 {} --theme gruvbox-dark'"
+}
+
+command -v zoxide &>/dev/null && eval "$(zoxide init bash)"
