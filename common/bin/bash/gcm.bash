@@ -1,7 +1,10 @@
 #! /bin/bash
 
 main() {
-  local message="$1"
+  local message=
+  for arg in "$@"; do
+    message+="$arg "
+  done
   local toplevel && toplevel=$(git rev-parse --show-toplevel)
   if [[ $toplevel != *"tmz-apps"* ]]; then
     git commit -m "$message"
@@ -17,4 +20,4 @@ main() {
   fi
 }
 
-main "$1"
+main "$@"
