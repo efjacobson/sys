@@ -23,5 +23,3 @@ command -v zoxide &>/dev/null && eval "$(zoxide init zsh)"
 setopt histignoredups
 
 alias c="clear"
-
-[ -z "$SSH_AUTH_SOCK" ] && eval "$(ssh-agent -s)"

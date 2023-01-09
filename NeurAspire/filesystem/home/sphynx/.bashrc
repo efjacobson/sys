@@ -142,8 +142,6 @@ HISTCONTROL=ignoreboth:erasedups
 
 alias c="clear"
 
-[ -z "$SSH_AUTH_SOCK" ] && eval "$(ssh-agent -s)"
-
 command -v fzf &>/dev/null && {
 	[ -f ~/.fzf.bash ] && source ~/.fzf.bash && echo 'sourced ~/.fzf.bash'
 	[ -f ~/.fzf.completion.bash ] && source ~/.fzf.completion.bash && echo 'sourced ~/.fzf.completion.bash'

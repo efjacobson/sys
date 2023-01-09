@@ -11,6 +11,7 @@
     "editor.fontLigatures": false,
     "workbench.colorTheme": "SynthWave '84",
     "editor.fontSize": 18,
-    "window.zoomLevel": 1,
-    "workbench.activityBar.visible": false
+    "workbench.activityBar.visible": false,
+    "explorer.compactFolders": false,
+    "window.zoomLevel": 1
 }

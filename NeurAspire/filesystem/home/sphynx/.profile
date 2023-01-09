@@ -6,3 +6,6 @@ export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 ### begin mods ###
 
 export PATH=/home/"$(whoami)"/._/bin:$PATH
+
+source ~/.ssh-find-agent.bash
+set_ssh_agent_socket
