@@ -11,6 +11,9 @@ if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
   source /usr/share/zsh/manjaro-zsh-prompt
 fi
 
+. ~/.ssh-find-agent.sh
+ssh_find_agent -a || eval $(ssh-agent) >/dev/null
+
 command -v fzf &>/dev/null && {
   [ -f ~/.fzf.zsh ] && source ~/.fzf.bash && echo 'sourced ~/.fzf.zsh'
   [ -f ~/.fzf.completion.zsh ] && source ~/.fzf.completion.zsh && echo 'sourced ~/.fzf.completion.zsh'

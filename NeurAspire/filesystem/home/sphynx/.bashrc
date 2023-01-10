@@ -142,6 +142,9 @@ HISTCONTROL=ignoreboth:erasedups
 
 alias c="clear"
 
+. ~/.ssh-find-agent.sh
+ssh_find_agent -a || eval $(ssh-agent) >/dev/null
+
 command -v fzf &>/dev/null && {
 	[ -f ~/.fzf.bash ] && source ~/.fzf.bash && echo 'sourced ~/.fzf.bash'
 	[ -f ~/.fzf.completion.bash ] && source ~/.fzf.completion.bash && echo 'sourced ~/.fzf.completion.bash'
