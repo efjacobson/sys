@@ -152,3 +152,6 @@ command -v fzf &>/dev/null && {
 }
 
 command -v zoxide &>/dev/null && eval "$(zoxide init bash)"
+
+. "$HOME/.ssh-find-agent.bash"
+ssh_find_agent -a || eval $(ssh-agent) >/dev/null

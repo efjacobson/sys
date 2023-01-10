@@ -25,3 +25,6 @@ setopt histignoredups
 alias c="clear"
 
 [ -z "$SSH_AUTH_SOCK" ] && eval "$(ssh-agent -s)"
+
+emulate ksh -c ". $HOME/.ssh-find-agent.bash"
+ssh_find_agent -a || eval $(ssh-agent) >/dev/null
