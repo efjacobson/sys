@@ -11,7 +11,7 @@ if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
   source /usr/share/zsh/manjaro-zsh-prompt
 fi
 
-. ~/.ssh-find-agent.sh
+emulate ksh -c ". $HOME/.ssh-find-agent.bash"
 ssh_find_agent -a || eval $(ssh-agent) >/dev/null
 
 command -v fzf &>/dev/null && {
