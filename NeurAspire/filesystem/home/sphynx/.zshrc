@@ -11,13 +11,10 @@ if [[ -e /usr/share/zsh/manjaro-zsh-prompt ]]; then
   source /usr/share/zsh/manjaro-zsh-prompt
 fi
 
-emulate ksh -c ". $HOME/.ssh-find-agent.bash"
-ssh_find_agent -a || eval $(ssh-agent) >/dev/null
-
 command -v fzf &>/dev/null && {
-  [ -f ~/.fzf.zsh ] && source ~/.fzf.bash && echo 'sourced ~/.fzf.zsh'
-  [ -f ~/.fzf.completion.zsh ] && source ~/.fzf.completion.zsh && echo 'sourced ~/.fzf.completion.zsh'
-  [ -f ~/.fzf.key-bindings.zsh ] && source ~/.fzf.key-bindings.zsh && echo 'sourced ~/.fzf.key-bindings.zsh'
+  [ -f ~/.fzf.zsh ] && source ~/.fzf.bash
+  [ -f ~/.fzf.completion.zsh ] && source ~/.fzf.completion.zsh
+  [ -f ~/.fzf.key-bindings.zsh ] && source ~/.fzf.key-bindings.zsh
   export FZF_DEFAULT_OPTS="--preview 'bat --style=numbers --color=always --line-range :500 {} --theme gruvbox-dark'"
 }
 
