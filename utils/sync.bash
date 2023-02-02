@@ -6,7 +6,7 @@ declare -r NC="${PREFIX}0m"
 declare -r GREEN="${PREFIX}0;32m"
 
 force=false
-verbose=false
+verbose=true
 while [ $# -gt 0 ]; do
   case "$1" in
   -f) force=true ;;
