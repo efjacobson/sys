@@ -87,17 +87,25 @@ set_user_bin() {
   if [ false != $user_bin ]; then
     return
   fi
-  if [ 'Geriatrix' == "$(hostname)" ]; then
+
+  case "$(hostname)" in
+  'Geriatrix')
     user_bin='._/bin/path'
-    return
-  fi
-  if [ 'NeurAspire' == "$(hostname)" ]; then
+    ;;
+  'NeurAspire')
     user_bin='._/bin'
-    return
-  fi
-  if [ 'WTMZ-TMZ006298' == "$(hostname)" ]; then
+    ;;
+  'neuraspire')
+    user_bin='._/bin'
+    ;;
+  'WTMZ-TMZ006298')
     user_bin='bin'
-  fi
+    ;;
+  *)
+    echo 'no bin for user!'
+    exit 1
+    ;;
+  esac
 }
 
 sync_script() {
@@ -185,7 +193,7 @@ set_identity() {
 }
 
 main() {
-  local implemented=('NeurAspire' 'Geriatrix' 'WTMZ-TMZ006298')
+  local implemented=('neuraspire' 'NeurAspire' 'Geriatrix' 'WTMZ-TMZ006298')
   local hostname && hostname=$(hostname)
   if [[ ! " ${implemented[*]} " =~ " ${hostname} " ]]; then
     echo "not implemented for $hostname yet"
