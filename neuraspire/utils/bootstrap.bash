@@ -12,27 +12,53 @@ fi
 
 user="$(basename "$(pwd)")"
 
+_drawio() {
+  appdir="/home/$user/._/app"
+  if [ ! -d "$appdir" ]; then
+    mkdir -p "$appdir"
+    chown "$user":"$user" -R "$appdir"
+  fi
+  if [ ! -f "$appdir/drawio-x86_64-20.8.16.AppImage" ]; then
+    pushd "$appdir"
+    wget 'https://github.com/jgraph/drawio-desktop/releases/download/v20.8.16/drawio-x86_64-20.8.16.AppImage'
+    chown "$user":"$user" -R "$appdir"
+    popd
+  fi
+}
+
 _fzf() {
-  if [ ! -d /home/"$user"/._/dev/git/junegunn ]; then
-    mkdir -p /home/"$user"/._/dev/git/junegunn
-    chown "$user":"$user" -R /home/"$user"/._/dev/git/junegunn
+  junegunn="/home/$user/._/dev/git/junegunn"
+  if [ ! -d "$junegunn" ]; then
+    mkdir -p "$junegunn"
+    chown "$user":"$user" -R "$junegunn"
   fi
-  if [ ! -d  /home/"$user"/._/dev/git/junegunn/fzf ]; then
-    git clone --depth 1 https://github.com/junegunn/fzf.git /home/"$user"/._/dev/git/junegunn/fzf
-    chown "$user":"$user" -R /home/"$user"/._/dev/git/junegunn/fzf
-  fi
-  if [ -x "$(command -v fzf)" ]; then
-    if [ "$1" != 'update' ]; then
-      printf '\ninstalling fzf...\n...already installed\n'
-      return
-    fi
+  if [ ! -d  "$junegunn/fzf" ]; then
+    git clone --depth 1 https://github.com/junegunn/fzf.git "$junegunn/fzf"
+    chown "$user":"$user" -R "$junegunn/fzf"
+    printf '\ninstalling fzf...\n'
+    sudo -u "$user" "$junegunn/fzf"/install
+    printf '\n...done\n'
+  elif [ "$1" != 'update' ]; then
     printf '\nupdating fzf...\n'
-    pushd /home/"$user"/._/dev/git/junegunn/fzf
+    pushd "$junegunn/fzf"
     git pull
     popd
+    printf '\n...done\n'
   else
-    sudo -u "$user" /home/"$user"/._/dev/git/junegunn/fzf/install
+    printf '\ninstalling fzf...\n...already installed\n'
   fi
+  # if [ -x "$(command -v fzf)" ]; then
+  #   if [ "$1" != 'update' ]; then
+  #     printf '\ninstalling fzf...\n...already installed\n'
+  #     return
+  #   fi
+  #   printf '\nupdating fzf...\n'
+  #   pushd "$junegunn/fzf"
+  #   git pull
+  #   popd
+  # else
+  #   sudo -u "$user" "$junegunn/fzf"/install
+  # fi
 }
 
 _zoxide() {
@@ -67,6 +93,10 @@ _update() {
 _install() {
   if [ 'fzf' == "$1" ]; then
     _fzf
+    return
+  fi
+  if [ 'drawio' == "$1" ]; then
+    _drawio
     return
   fi
   printf '\ninstalling %s...\n' "$1"
@@ -225,9 +255,6 @@ alias c='clear'
 EOF
 }
 
-packages=(ripgrep code bat thunderbird xsel jc ffmpeg freecad fzf virt-viewer libreoffice ledger-live-bin mediainfo)
-aurs=(authy brother-mfc-l2710dw)
-
 _main() {
   # _set_mac_address
   _zshrc
@@ -241,7 +268,47 @@ _main() {
     _build "$aur"
   done
 
+  for c in "${cargos[@]}"; do
+    sudo -u "$user" cargo install "$c"
+  done
+
   _zoxide
+
+  pamac remove -o
 }
+
+cargos=(
+  imdb-rename
+)
+
+aurs=(
+  authy
+  brother-mfc-l2710dw
+)
+
+packages=(
+  bat
+  clonezilla
+  code
+  drawio
+  gparted
+  ffmpeg
+  freecad
+  fzf
+  jc
+  ledger-live-bin
+  libreoffice
+  mediainfo
+  ripgrep
+  sweethome3d
+  thunderbird
+  virt-viewer
+  vlc
+  xsel
+  rust
+  pkgconf
+  tldr
+  krename
+)
 
 _main
