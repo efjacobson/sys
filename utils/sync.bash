@@ -21,6 +21,9 @@ case "$(hostname)" in
 NeurAspire)
   reverse_sync_files+=("$HOME/.config/Code - OSS/User/settings.json")
   ;;
+neuraspire)
+  reverse_sync_files+=("$HOME/.config/Code - OSS/User/settings.json")
+  ;;
 *) ;;
 esac
 

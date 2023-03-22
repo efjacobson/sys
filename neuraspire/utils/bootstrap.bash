@@ -26,6 +26,19 @@ _drawio() {
   fi
 }
 
+_docker() {
+  printf '\ninstalling %s...\n' "$1"
+  pacman -Qi "$1" &>/dev/null
+  if [ "$?" == '0' ]; then
+    echo "...already installed"
+  else
+    _update
+    echo "$(date +\'%s.%N\'): $1 (sys._install)" >>/etc/pacman.d/.log
+    pamac install "$1"
+    curl -fsSL https://get.docker.com/rootless | sh
+  fi
+}
+
 _fzf() {
   junegunn="/home/$user/._/dev/git/junegunn"
   if [ ! -d "$junegunn" ]; then
@@ -97,6 +110,10 @@ _install() {
   fi
   if [ 'drawio' == "$1" ]; then
     _drawio
+    return
+  fi
+  if [ 'docker' == "$1" ]; then
+    _docker
     return
   fi
   printf '\ninstalling %s...\n' "$1"
@@ -251,6 +268,9 @@ _zshrc() {
 
   cat << 'EOF' >> /home/"$user"/.zshrc
 
+export PATH=/home/"$(whoami)"/._/bin:$PATH
+export PATH=/home/sphynx/bin:$PATH # for rootless docker
+
 alias c='clear'
 EOF
 }
@@ -288,6 +308,8 @@ aurs=(
 
 packages=(
   bat
+  docker
+  docker-compose
   clonezilla
   code
   drawio
@@ -309,6 +331,9 @@ packages=(
   pkgconf
   tldr
   krename
+  nodejs
+  nvm
+  aws-cli-v2
 )
 
 _main
