@@ -310,6 +310,7 @@ cargos=(
 aurs=(
   authy
   brother-mfc-l2710dw
+  qdirstat
 )
 
 packages=(
