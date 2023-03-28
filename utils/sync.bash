@@ -24,6 +24,9 @@ NeurAspire)
 neuraspire)
   reverse_sync_files+=("$HOME/.config/Code - OSS/User/settings.json")
   ;;
+hbot)
+  reverse_sync_files+=("$HOME/.config/Code - OSS/User/settings.json")
+  ;;
 *) ;;
 esac
 
@@ -99,6 +102,9 @@ set_user_bin() {
     user_bin='._/bin'
     ;;
   'neuraspire')
+    user_bin='._/bin'
+    ;;
+  'hbot')
     user_bin='._/bin'
     ;;
   'WTMZ-TMZ006298')
@@ -190,13 +196,17 @@ set_identity() {
     is_NeurAspire=true
     return
   fi
+  if [ 'hbot' == "$(hostname)" ]; then
+    is_hbot=true
+    return
+  fi
   if [ 'WTMZ-TMZ006298' == "$(hostname)" ]; then
     is_WTMZ=true
   fi
 }
 
 main() {
-  local implemented=('neuraspire' 'NeurAspire' 'Geriatrix' 'WTMZ-TMZ006298')
+  local implemented=('hbot' 'neuraspire' 'NeurAspire' 'Geriatrix' 'WTMZ-TMZ006298')
   local hostname && hostname=$(hostname)
   if [[ ! " ${implemented[*]} " =~ " ${hostname} " ]]; then
     echo "not implemented for $hostname yet"

@@ -80,6 +80,9 @@ _update() {
     pamac upgrade -a
     _fzf 'update'
     tmp="$(mktemp)"
+    if [ ! -f /home/"$user"/._/sys/state.yaml ]; then
+      touch /home/"$user"/._/sys/state.yaml
+    fi
     yq -Y --argjson now $((now)) '.updated_at = $now' /home/"$user"/._/sys/state.yaml >"$tmp" && mv "$tmp" /home/"$user"/._/sys/state.yaml
     chown "$user":"$user" /home/"$user"/._/sys/state.yaml
   fi
@@ -166,8 +169,11 @@ EOF
 
     pamac update
     pamac upgrade
-    _install yq
+    pamac install yq
 
+    if [ ! -f /home/"$user"/._/sys/state.yaml ]; then
+      touch /home/"$user"/._/sys/state.yaml
+    fi
     yq -Y '.' <<<'{"updated_at":'"$(date +'%s')"'}' >/home/"$user"/._/sys/state.yaml
 
     chown "$user":"$user" -R /home/"$user"/._
@@ -305,6 +311,7 @@ EOF
 _main() {
   # _set_mac_address
   _first_run
+  _zshrc
 
   for package in "${packages[@]}"; do
     _install "$package"
@@ -332,6 +339,7 @@ cargos=(
 aurs=(
   authy
   brother-mfc-l2710dw
+  qdirstat
 )
 
 packages=(
