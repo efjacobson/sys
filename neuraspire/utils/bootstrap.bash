@@ -26,20 +26,9 @@ _drawio() {
   fi
 }
 
-_docker() {
-  printf '\ninstalling %s...\n' "$1"
-  pacman -Qi "$1" &>/dev/null
-  if [ "$?" == '0' ]; then
-    echo "...already installed"
-  else
-    _update
-    echo "$(date +\'%s.%N\'): $1 (sys._install)" >>/etc/pacman.d/.log
-    pamac install "$1"
-    curl -fsSL https://get.docker.com/rootless | sh
-  fi
-}
-
+_has_fzf="$(false)"
 _fzf() {
+  _has_fzf="$(true)"
   junegunn="/home/$user/._/dev/git/junegunn"
   if [ ! -d "$junegunn" ]; then
     mkdir -p "$junegunn"
@@ -74,17 +63,10 @@ _fzf() {
   # fi
 }
 
+_has_zoxide="$(false)"
 _zoxide() {
-  if [ ! -x "$(command -v zoxide)" ]; then
-    first=true
-  fi
+  _has_zoxide="$(true)"
   _install 'zoxide'
-  if [ first ] && [ -x "$(command -v zoxide)" ]; then
-    cat << 'EOF' >> /home/"$user"/.zshrc
-
-eval "$(zoxide init zsh)"
-EOF
-  fi
 }
 
 _update() {
@@ -110,10 +92,6 @@ _install() {
   fi
   if [ 'drawio' == "$1" ]; then
     _drawio
-    return
-  fi
-  if [ 'docker' == "$1" ]; then
-    _docker
     return
   fi
   printf '\ninstalling %s...\n' "$1"
@@ -269,15 +247,63 @@ _zshrc() {
   cat << 'EOF' >> /home/"$user"/.zshrc
 
 export PATH=/home/"$(whoami)"/._/bin:$PATH
-export PATH=/home/sphynx/bin:$PATH # for rootless docker
-
 alias c='clear'
+
+if [ -z "$SSH_AGENT_SOCK" ]; then
+  eval `ssh-agent`
+  _tmp="$(mktemp -d)"
+  cp -r /home/"$(whoami)"/.ssh "$_tmp"
+  rm /home/"$(whoami)"/.ssh/config /home/"$(whoami)"/.ssh/known_hosts /home/"$(whoami)"/.ssh/*.pub
+  for key in /home/"$(whoami)"/.ssh/*; do
+    ssh-add "$key"
+  done
+  rm -rf /home/"$(whoami)"/.ssh
+  cp -r "$_tmp/.ssh" /home/"$(whoami)"/
+  rm -rf "$_tmp"
+fi
+
 EOF
+
+  if [ _has_zoxide ]; then
+    cat << 'EOF' >> /home/"$user"/.zshrc
+
+eval "$(zoxide init zsh)"
+
+EOF
+  fi
+
+  if [ _has_fzf ]; then
+    cat << 'EOF' >> /home/"$user"/.zshrc
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+EOF
+
+  rm /home/"$user"/.fzf.zsh
+  cat << 'EOF' >> /home/"$user"/.fzf.zsh
+
+# Setup fzf
+# ---------
+if [[ ! "$PATH" == */home/"$(whoami)"/._/dev/git/junegunn/fzf/bin* ]]; then
+  PATH="${PATH:+${PATH}:}/home/"$(whoami)"/._/dev/git/junegunn/fzf/bin"
+fi
+
+# Auto-completion
+# ---------------
+[[ $- == *i* ]] && source "/home/"$(whoami)"/._/dev/git/junegunn/fzf/shell/completion.zsh" 2> /dev/null
+
+# Key bindings
+# ------------
+source "/home/"$(whoami)"/._/dev/git/junegunn/fzf/shell/key-bindings.zsh"
+
+EOF
+  chown "$user:$user" /home/"$user"/.fzf.zsh
+
+  fi
 }
 
 _main() {
   # _set_mac_address
-  _zshrc
   _first_run
 
   for package in "${packages[@]}"; do
@@ -295,6 +321,8 @@ _main() {
   _zoxide
 
   pamac remove -o
+
+  _zshrc
 }
 
 cargos=(
@@ -307,33 +335,34 @@ aurs=(
 )
 
 packages=(
+  aws-cli-v2
   bat
-  docker
-  docker-compose
   clonezilla
   code
   drawio
-  gparted
   ffmpeg
   freecad
   fzf
+  gparted
   jc
+  krename
   ledger-live-bin
   libreoffice
   mediainfo
-  ripgrep
-  sweethome3d
-  thunderbird
-  virt-viewer
-  vlc
-  xsel
-  rust
-  pkgconf
-  tldr
-  krename
   nodejs
   nvm
-  aws-cli-v2
+  pkgconf
+  ripgrep
+  rust
+  sweethome3d
+  thunderbird
+  tldr
+  virt-viewer
+  vlc
+  whois
+  wireshark-qt
+  xsel
+  bind
 )
 
 _main
