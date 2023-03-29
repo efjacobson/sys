@@ -255,18 +255,14 @@ _zshrc() {
 export PATH=/home/"$(whoami)"/._/bin:$PATH
 alias c='clear'
 
-if [ -z "$SSH_AGENT_SOCK" ]; then
-  eval `ssh-agent`
-  _tmp="$(mktemp -d)"
-  cp -r /home/"$(whoami)"/.ssh "$_tmp"
-  rm /home/"$(whoami)"/.ssh/config /home/"$(whoami)"/.ssh/known_hosts /home/"$(whoami)"/.ssh/*.pub
-  for key in /home/"$(whoami)"/.ssh/*; do
-    ssh-add "$key"
-  done
-  rm -rf /home/"$(whoami)"/.ssh
-  cp -r "$_tmp/.ssh" /home/"$(whoami)"/
-  rm -rf "$_tmp"
-fi
+for item in /home/"$(whoami)"/.ssh/*; do
+  key="$(basename "$item")"
+  if [[ "$key" =~ '(known_hosts|config|.+\.pub$)' ]]; then
+    continue
+  else
+    eval "$(keychain --agents ssh --eval "$key")"
+  fi
+done
 
 EOF
 
@@ -343,6 +339,7 @@ aurs=(
 )
 
 packages=(
+  keychain
   aws-cli-v2
   bat
   clonezilla
@@ -371,6 +368,8 @@ packages=(
   wireshark-qt
   xsel
   bind
+  krfb
+  krdc
 )
 
 _main
