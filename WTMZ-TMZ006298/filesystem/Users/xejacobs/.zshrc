@@ -206,6 +206,7 @@ function run_with_last_arg() {
 alias grep='grep --color=always'
 alias la=run_with_last_arg
 alias c="clear"
+alias co="code -r"
 alias gs="git status"
 alias gd="git diff"
 
