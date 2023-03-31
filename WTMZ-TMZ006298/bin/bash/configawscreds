@@ -46,13 +46,15 @@ for opt in "$@"; do
   esac
 done
 
-if [[ -z "$vendor" ]] && [[ $(git rev-parse --show-toplevel) =~ .*toofab.* ]]; then
+top_level=$(git rev-parse --show-toplevel)
+if [[ -z "$vendor" ]] && [[ "$top_level" =~ .*toofab.* ]]; then
   vendor='toofab'
 else
   vendor='tmz'
 fi
 
 main() {
+  [ ! -f "$HOME/.aws/BY_ENV/$vendor-docker-$env-$region" ] && echo "no creds for $vendor $env in $region" && exit
   rm "$HOME/.aws/$vendor-docker"
   if ${admin}; then
     key_id=$(sed -n '1 p' <"$HOME/.aws/wb-tmz-eric.jacobson")
@@ -63,14 +65,12 @@ aws_access_key_id=$key_id
 aws_secret_access_key=$access_key
 EOF
   else
-    cp "$HOME/.aws/BY_ENV/$vendor-docker-$env-$region" "/Users/xejacobs/.aws/$vendor-docker"
-    key_id_search='aws_access_key_id='
-    key_id_line="$(ggrep "$key_id_search" <"$HOME/.aws/$vendor-docker")"
-    key_id=$(echo "$key_id_line" | sed "s/$key_id_search//")
-
-    access_key_search='aws_secret_access_key='
-    access_key_line="$(ggrep "$access_key_search" <"$HOME/.aws/$vendor-docker")"
-    access_key=$(echo "$access_key_line" | sed "s/$access_key_search//")
+    [ ! -f "$HOME/.aws/BY_ENV/$vendor-docker-$env-$region" ] && echo "no creds for $vendor $env in $region" && exit
+    cp "$HOME/.aws/BY_ENV/$vendor-docker-$env-$region" "$HOME/.aws/$vendor-docker"
+    key_id_line="$(head -n 2 "$HOME/.aws/$vendor-docker" | tail -n1)"
+    key_id=${key_id_line/aws_access_key_id=/}
+    access_key_line="$(head -n 3 $HOME/.aws/$vendor-docker | tail -n1)"
+    access_key=${access_key_line/aws_secret_access_key=/}
   fi
 
   aws configure --profile "$vendor-docker" set aws_access_key_id "$key_id"
