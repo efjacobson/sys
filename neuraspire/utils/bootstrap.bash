@@ -69,7 +69,11 @@ _zoxide() {
   _install 'zoxide'
 }
 
+_updated=false
 _update() {
+  if $_updated; then
+    return
+  fi
   echo 'checking last update time...'
   updated_at="$(yq -r '.updated_at' /home/"$user"/._/sys/state.yaml)"
   now="$(date +'%s')"
@@ -85,7 +89,10 @@ _update() {
     fi
     yq -Y --argjson now $((now)) '.updated_at = $now' /home/"$user"/._/sys/state.yaml >"$tmp" && mv "$tmp" /home/"$user"/._/sys/state.yaml
     chown "$user":"$user" /home/"$user"/._/sys/state.yaml
+  else
+    echo '...skipping update as it has already been done in the last 24 hours'
   fi
+  _updated=true
 }
 
 _install() {
@@ -254,6 +261,7 @@ _zshrc() {
 
 export PATH=/home/"$(whoami)"/._/bin:$PATH
 alias c='clear'
+alias gs='git status'
 
 for item in /home/"$(whoami)"/.ssh/*; do
   key="$(basename "$item")"
@@ -308,6 +316,7 @@ _main() {
   # _set_mac_address
   _first_run
   _zshrc
+  _update
 
   for package in "${packages[@]}"; do
     _install "$package"
