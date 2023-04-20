@@ -19,16 +19,15 @@ _drawio() {
     chown "$user":"$user" -R "$appdir"
   fi
   if [ ! -f "$appdir/drawio-x86_64-20.8.16.AppImage" ]; then
-    pushd "$appdir"
+    pushd "$appdir" || exit
     wget 'https://github.com/jgraph/drawio-desktop/releases/download/v20.8.16/drawio-x86_64-20.8.16.AppImage'
     chown "$user":"$user" -R "$appdir"
-    popd
+    popd || exit
   fi
 }
 
-_has_fzf="$(false)"
+_has_fzf=false
 _fzf() {
-  _has_fzf="$(true)"
   junegunn="/home/$user/._/dev/git/junegunn"
   if [ ! -d "$junegunn" ]; then
     mkdir -p "$junegunn"
@@ -42,13 +41,14 @@ _fzf() {
     printf '\n...done\n'
   elif [ "$1" != 'update' ]; then
     printf '\nupdating fzf...\n'
-    pushd "$junegunn/fzf"
+    pushd "$junegunn/fzf" || exit
     git pull
-    popd
+    popd || exit
     printf '\n...done\n'
   else
     printf '\ninstalling fzf...\n...already installed\n'
   fi
+  _has_fzf=true
   # if [ -x "$(command -v fzf)" ]; then
   #   if [ "$1" != 'update' ]; then
   #     printf '\ninstalling fzf...\n...already installed\n'
@@ -63,10 +63,10 @@ _fzf() {
   # fi
 }
 
-_has_zoxide="$(false)"
+_has_zoxide=false
 _zoxide() {
-  _has_zoxide="$(true)"
   _install 'zoxide'
+  _has_zoxide=true
 }
 
 _update() {
@@ -102,7 +102,6 @@ _install() {
   if [ "$?" == '0' ]; then
     echo "...already installed"
   else
-    _update
     echo "$(date +\'%s.%N\'): $1 (sys._install)" >>/etc/pacman.d/.log
     pamac install "$1"
   fi
@@ -241,7 +240,6 @@ _set_mac_address() {
 }
 
 _zshrc() {
-  # todo: need to consolidate this, fzf, and zoxide edits to the file
   if [ ! -f /home/"$user"/.zshrc.original ]; then
     cp /home/"$user"/.zshrc /home/"$user"/.zshrc.original
   fi
@@ -249,24 +247,9 @@ _zshrc() {
   chmod 000 /home/"$user"/.zshrc.original
   cp /home/"$user"/.zshrc.original /home/"$user"/.zshrc
   chmod 644 /home/"$user"/.zshrc
+  chown "$user:$user" /home/"$user"/.fzf.zsh
 
-  cat << 'EOF' >> /home/"$user"/.zshrc
-
-export PATH=/home/"$(whoami)"/._/bin:$PATH
-alias c='clear'
-
-for item in /home/"$(whoami)"/.ssh/*; do
-  key="$(basename "$item")"
-  if [[ "$key" =~ '(known_hosts|config|.+\.pub$)' ]]; then
-    continue
-  else
-    eval "$(keychain --agents ssh --eval "$key")"
-  fi
-done
-
-EOF
-
-  if [ _has_zoxide ]; then
+  if $_has_zoxide; then
     cat << 'EOF' >> /home/"$user"/.zshrc
 
 eval "$(zoxide init zsh)"
@@ -274,7 +257,7 @@ eval "$(zoxide init zsh)"
 EOF
   fi
 
-  if [ _has_fzf ]; then
+  if $_has_fzf; then
     cat << 'EOF' >> /home/"$user"/.zshrc
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -299,15 +282,46 @@ fi
 source "/home/"$(whoami)"/._/dev/git/junegunn/fzf/shell/key-bindings.zsh"
 
 EOF
-  chown "$user:$user" /home/"$user"/.fzf.zsh
 
   fi
+
+  cat << 'EOF' >> /home/"$user"/.zshrc
+
+export PATH=/home/"$(whoami)"/._/bin:$PATH
+alias c='clear'
+alias gf='git fetch'
+
+if [ -z "$SSH_AGENT_PID" ]; then
+  keylock="/home/$(whoami)/._/.keychain.lock"
+  if [ -f "$keylock" ]; then
+    while true; do
+      sleep 1
+      if [ ! -f "$keylock" ]; then
+        source /home/"$(whoami)"/.keychain/"$(hostname)"-sh
+        break
+      fi
+    done
+  else
+    touch "$keylock"
+    for item in /home/"$(whoami)"/.ssh/*; do
+      key="$(basename "$item")"
+      if [[ "$key" =~ '(known_hosts|config|.+\.pub$)' ]]; then
+        continue
+      else
+        eval "$(keychain -q --agents ssh --eval "$key")"
+      fi
+    done
+    rm "$keylock"
+  fi
+fi
+
+EOF
 }
 
 _main() {
   # _set_mac_address
   _first_run
-  _zshrc
+    _update
 
   for package in "${packages[@]}"; do
     _install "$package"
@@ -321,6 +335,16 @@ _main() {
     sudo -u "$user" cargo install "$c"
   done
 
+  for p in "${pips[@]}"; do
+    sudo -u "$user" pip3 install --upgrade "$p"
+  done
+
+  if [ -x "$(command -v snap)" ]; then
+    for s in "${snaps[@]}"; do
+        snap install "$s"
+    done
+  fi
+
   _zoxide
 
   pamac remove -o
@@ -332,25 +356,38 @@ cargos=(
   imdb-rename
 )
 
+pips=(
+  gimme-aws-creds
+)
+
 aurs=(
+  dupeguru
   authy
   brother-mfc-l2710dw
   qdirstat
 )
 
+snaps=(
+  mqtt-explorer
+)
+
 packages=(
-  keychain
   aws-cli-v2
   bat
+  bind
   clonezilla
   code
   drawio
   ffmpeg
   freecad
   fzf
+  glances
   gparted
   jc
+  keychain
+  krdc
   krename
+  krfb
   ledger-live-bin
   libreoffice
   mediainfo
@@ -359,17 +396,18 @@ packages=(
   pkgconf
   ripgrep
   rust
+  shellcheck
+  snapd
   sweethome3d
   thunderbird
   tldr
+  traceroute
   virt-viewer
   vlc
+  wavemon
   whois
   wireshark-qt
   xsel
-  bind
-  krfb
-  krdc
 )
 
 _main

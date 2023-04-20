@@ -8,7 +8,7 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
-const SHOW = "Bob's Burgers";
+const show = process.argv[3];
 
 const absolute = (f) => `${path.dirname(f)}/${path.basename(f)}`
 
@@ -20,7 +20,7 @@ const rename = (fileOrDir) => {
         });
         return;
     }
-    const renamed = `${path.dirname(absolute(fileOrDir))}/${SHOW} - ${path.basename(fileOrDir).replace(/S(\d+?)E(\d+?)/, 's$1e$2')}`;
+    const renamed = `${path.dirname(absolute(fileOrDir))}/${show} - ${path.basename(fileOrDir).replace(/S(\d+?)E(\d+?)/, 's$1e$2')}`;
     renames.push({
         original: path.basename(fileOrDir),
         renamed: path.basename(renamed),
