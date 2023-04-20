@@ -206,6 +206,9 @@ function run_with_last_arg() {
 alias grep='grep --color=always'
 alias la=run_with_last_arg
 alias c="clear"
+alias co="code -r"
+alias gs="git status"
+alias gd="git diff"
 
 # command -v fzf &>/dev/null && {
 #   [ -f ~/.fzf.completion.zsh ] && source ~/.fzf.completion.zsh && echo 'sourced ~/.fzf.completion.zsh'

@@ -69,7 +69,11 @@ _zoxide() {
   _has_zoxide=true
 }
 
+_updated=false
 _update() {
+  if $_updated; then
+    return
+  fi
   echo 'checking last update time...'
   updated_at="$(yq -r '.updated_at' /home/"$user"/._/sys/state.yaml)"
   now="$(date +'%s')"
@@ -85,7 +89,10 @@ _update() {
     fi
     yq -Y --argjson now $((now)) '.updated_at = $now' /home/"$user"/._/sys/state.yaml >"$tmp" && mv "$tmp" /home/"$user"/._/sys/state.yaml
     chown "$user":"$user" /home/"$user"/._/sys/state.yaml
+  else
+    echo '...skipping update as it has already been done in the last 24 hours'
   fi
+  _updated=true
 }
 
 _install() {
@@ -321,7 +328,8 @@ EOF
 _main() {
   # _set_mac_address
   _first_run
-    _update
+  _zshrc
+  _update
 
   for package in "${packages[@]}"; do
     _install "$package"
@@ -348,8 +356,6 @@ _main() {
   _zoxide
 
   pamac remove -o
-
-  _zshrc
 }
 
 cargos=(

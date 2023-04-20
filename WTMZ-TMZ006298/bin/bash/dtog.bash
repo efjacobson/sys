@@ -30,7 +30,7 @@ for opt in "$@"; do
 done
 
 main() {
-  if [ 0 -eq "$(pgrep docker | head -n 2 | wc -l | xargs)" ]; then
+  if (! docker stats --no-stream); then
     running=false
   fi
 
