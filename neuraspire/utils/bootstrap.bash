@@ -49,18 +49,6 @@ _fzf() {
     printf '\ninstalling fzf...\n...already installed\n'
   fi
   _has_fzf=true
-  # if [ -x "$(command -v fzf)" ]; then
-  #   if [ "$1" != 'update' ]; then
-  #     printf '\ninstalling fzf...\n...already installed\n'
-  #     return
-  #   fi
-  #   printf '\nupdating fzf...\n'
-  #   pushd "$junegunn/fzf"
-  #   git pull
-  #   popd
-  # else
-  #   sudo -u "$user" "$junegunn/fzf"/install
-  # fi
 }
 
 _has_zoxide=false
@@ -220,32 +208,6 @@ _setup_omv() {
   done
 }
 
-_set_mac_address() {
-  name='"$(hostname)"'
-  mac=
-  while [ -n "$name" ]; do
-    if [ -n "$mac" ]; then
-      mac+=':'
-    fi
-    trimmed="$(echo "$name" | sed s/.//)"
-    char=${name:0:1}
-    hex="$(echo -n "$char" | od -An -tx2)"
-    dub=${hex: -2}
-    mac+="$(echo "$dub" | tr '[:lower:]' '[:upper:]')"
-    if [ 17 -eq ${#mac} ]; then
-      break
-    fi
-    name=$trimmed
-  done
-
-  while [ 17 -gt ${#mac} ]; do
-    mac+=':00'
-  done
-
-  _install macchanger
-  eval "macchanger --mac=$mac"
-}
-
 _zshrc() {
   if [ ! -f /home/"$user"/.zshrc.original ]; then
     cp /home/"$user"/.zshrc /home/"$user"/.zshrc.original
@@ -297,6 +259,8 @@ EOF
 export PATH=/home/"$(whoami)"/._/bin:$PATH
 alias c='clear'
 alias gf='git fetch'
+alias gs='git status'
+alias gd='git diff'
 
 if [ -z "$SSH_AGENT_PID" ]; then
   keylock="/home/$(whoami)/._/.keychain.lock"
@@ -326,9 +290,7 @@ EOF
 }
 
 _main() {
-  # _set_mac_address
   _first_run
-  _zshrc
   _update
 
   for package in "${packages[@]}"; do
@@ -351,11 +313,15 @@ _main() {
     for s in "${snaps[@]}"; do
         snap install "$s"
     done
+  else
+    echo 'snap is not installed!'
   fi
 
   _zoxide
 
   pamac remove -o
+
+  _zshrc
 }
 
 cargos=(
@@ -375,6 +341,7 @@ aurs=(
 
 snaps=(
   mqtt-explorer
+  spotify
 )
 
 packages=(
@@ -414,6 +381,7 @@ packages=(
   whois
   wireshark-qt
   xsel
+  zbar
 )
 
 _main
