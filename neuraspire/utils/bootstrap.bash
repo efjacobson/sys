@@ -263,27 +263,14 @@ alias gs='git status'
 alias gd='git diff'
 
 if [ -z "$SSH_AGENT_PID" ]; then
-  keylock="/home/$(whoami)/._/.keychain.lock"
-  if [ -f "$keylock" ]; then
-    while true; do
-      sleep 1
-      if [ ! -f "$keylock" ]; then
-        source /home/"$(whoami)"/.keychain/"$(hostname)"-sh
-        break
-      fi
-    done
-  else
-    touch "$keylock"
-    for item in /home/"$(whoami)"/.ssh/*; do
-      key="$(basename "$item")"
-      if [[ "$key" =~ '(known_hosts|config|.+\.pub$)' ]]; then
-        continue
-      else
-        eval "$(keychain -q --agents ssh --eval "$key")"
-      fi
-    done
-    rm "$keylock"
-  fi
+  for item in /home/"$(whoami)"/.ssh/*; do
+    key="$(basename "$item")"
+    if [[ "$key" =~ (known_hosts|config|.+\.pub$) ]]; then
+      continue
+    else
+      eval "$(keychain -q --agents ssh --eval "$key")"
+    fi
+  done
 fi
 
 EOF
@@ -367,11 +354,13 @@ packages=(
   nodejs
   nvm
   pkgconf
+  qbittorrent
   ripgrep
   rust
   shellcheck
   snapd
   sweethome3d
+  syncthing
   thunderbird
   tldr
   traceroute
@@ -382,6 +371,7 @@ packages=(
   wireshark-qt
   xsel
   zbar
+  zip
 )
 
 _main
