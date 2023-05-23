@@ -164,6 +164,7 @@ EOF
     pamac update
     pamac upgrade
     pamac install yq
+    pamac install cifs-utils
 
     if [ ! -f /home/"$user"/._/sys/state.yaml ]; then
       touch /home/"$user"/._/sys/state.yaml
@@ -257,10 +258,26 @@ EOF
   cat << 'EOF' >> /home/"$user"/.zshrc
 
 export PATH=/home/"$(whoami)"/._/bin:$PATH
+
+HISTFILE=~/.zshistory
+HISTSIZE=1000000
+SAVEHIST=1000000
+
+setopt notify
+setopt nomatch
+setopt extendedglob
+setopt autocd
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_IGNORE_SPACE
+
+unsetopt beep
+
 alias c='clear'
 alias gf='git fetch'
 alias gs='git status'
 alias gd='git diff'
+alias ls='ls --color=auto --human-readable --group-directories-first --classify --time-style=+"" -lA'
 
 if [ -z "$SSH_AGENT_PID" ]; then
   for item in /home/"$(whoami)"/.ssh/*; do
@@ -272,6 +289,29 @@ if [ -z "$SSH_AGENT_PID" ]; then
     fi
   done
 fi
+
+source /usr/share/nvm/init-nvm.sh
+
+auto_nvmrc() {
+  if [[ $PWD == $PREV_PWD ]]; then
+    return
+  fi
+
+  if [[ "$PWD" =~ "$PREV_PWD" && ! -f ".nvmrc" ]]; then
+    return
+  fi
+
+  PREV_PWD=$PWD
+  if [[ -f ".nvmrc" ]]; then
+    nvm use
+    NVM_DIRTY=true
+  elif [[ $NVM_DIRTY = true ]]; then
+    nvm use default
+    NVM_DIRTY=false
+  fi
+}
+
+chpwd_functions+=( auto_nvmrc )
 
 EOF
 }
@@ -316,7 +356,7 @@ cargos=(
 )
 
 pips=(
-  gimme-aws-creds
+  # gimme-aws-creds
 )
 
 aurs=(
@@ -333,6 +373,7 @@ snaps=(
 
 packages=(
   aws-cli-v2
+  base-devel
   bat
   bind
   clonezilla
@@ -353,8 +394,10 @@ packages=(
   mediainfo
   nodejs
   nvm
+  nvm
   pkgconf
   qbittorrent
+  qmk
   ripgrep
   rust
   shellcheck
@@ -365,6 +408,7 @@ packages=(
   tldr
   traceroute
   virt-viewer
+  vivaldi
   vlc
   wavemon
   whois
