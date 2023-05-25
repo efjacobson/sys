@@ -68,7 +68,7 @@ _update() {
   timer=$((24 * 60 * 60))
   if [ $((now - updated_at)) -gt "$timer" ]; then
     echo 'updating and upgrading with pamac and friends...'
-    pamac update -a
+    pamac update -a --devel
     pamac upgrade -a
     _fzf 'update'
     tmp="$(mktemp)"
@@ -364,6 +364,10 @@ aurs=(
   authy
   brother-mfc-l2710dw
   qdirstat
+  google-chrome
+  android-studio
+  android-sdk-cmdline-tools-latest
+  android-sdk-build-tools
 )
 
 snaps=(
@@ -374,6 +378,8 @@ snaps=(
 packages=(
   aws-cli-v2
   base-devel
+  docker
+  docker-compose
   bat
   bind
   clonezilla
