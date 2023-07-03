@@ -65,10 +65,11 @@ _update() {
   echo 'checking last update time...'
   updated_at="$(yq -r '.updated_at' /home/"$user"/._/sys/state.yaml)"
   now="$(date +'%s')"
-  timer=$((24 * 60 * 60))
-  if [ $((now - updated_at)) -gt "$timer" ]; then
+  one_day=$((24 * 60 * 60))
+  if [ $((now - updated_at)) -gt "$one_day" ]; then
     echo 'updating and upgrading with pamac and friends...'
     pamac update -a --devel
+    pamac upgrade archlinux-keyring
     pamac upgrade -a
     _fzf 'update'
     tmp="$(mktemp)"
@@ -279,17 +280,6 @@ alias gs='git status'
 alias gd='git diff'
 alias ls='ls --color=auto --human-readable --group-directories-first --classify --time-style=+"" -lA'
 
-if [ -z "$SSH_AGENT_PID" ]; then
-  for item in /home/"$(whoami)"/.ssh/*; do
-    key="$(basename "$item")"
-    if [[ "$key" =~ (known_hosts|config|.+\.pub$) ]]; then
-      continue
-    else
-      eval "$(keychain -q --agents ssh --eval "$key")"
-    fi
-  done
-fi
-
 source /usr/share/nvm/init-nvm.sh
 
 auto_nvmrc() {
@@ -312,6 +302,24 @@ auto_nvmrc() {
 }
 
 chpwd_functions+=( auto_nvmrc )
+
+
+if [ -z "$SSH_AGENT_PID" ]; then
+  # skip first terminal instance
+  if ! [ -f /home/"$(whoami)"/._/.keychain.activate ]; then
+    touch /home/"$(whoami)"/._/.keychain.activate
+  else
+    rm /home/"$(whoami)"/._/.keychain.activate
+    for item in /home/"$(whoami)"/.ssh/*; do
+      key="$(basename "$item")"
+      if [[ "$key" =~ (known_hosts|config|.+\.pub$) ]]; then
+        continue
+      else
+        eval "$(keychain -q --agents ssh --eval "$key")"
+      fi
+    done
+  fi
+fi
 
 EOF
 }
@@ -364,7 +372,7 @@ aurs=(
   authy
   brother-mfc-l2710dw
   qdirstat
-  google-chrome
+  kopia-bin
   android-studio
   android-sdk-cmdline-tools-latest
   android-sdk-build-tools
@@ -373,18 +381,22 @@ aurs=(
 snaps=(
   mqtt-explorer
   spotify
+  code
+  picard
 )
 
 packages=(
+  arch-wiki-docs
   aws-cli-v2
   base-devel
-  docker
-  docker-compose
   bat
   bind
+  brave-browser
   clonezilla
-  code
+  docker
+  docker-compose
   drawio
+  ebtables
   ffmpeg
   freecad
   fzf
@@ -396,13 +408,17 @@ packages=(
   krename
   krfb
   ledger-live-bin
+  libpamac-snap-plugin
   libreoffice
+  libvirt
   mediainfo
   nodejs
   nvm
   nvm
   pkgconf
   qbittorrent
+  qemu
+  qemu-full
   qmk
   ripgrep
   rust
@@ -413,6 +429,7 @@ packages=(
   thunderbird
   tldr
   traceroute
+  virt-manager
   virt-viewer
   vivaldi
   vlc
