@@ -1,0 +1,366 @@
+title: tdiaz
+description: ""
+author: ''
+license: ''
+version: ''
+last_updated: 2023-05-29 07:54:17 UTC
+script_language_version: '1.1'
+script: "$noop(\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\
+  \u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\
+  \u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\
+  \u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\
+  \u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\
+  \u2605\u2605\u2605\u2605)\n$noop(\u2605 MBP YA Magic-Script that does more stuff\
+  \ too. - v2.7 -  amd/17500mph \u2605)\n$noop(\u2605\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\
+  \t\t\t\t\t\t\t\t\t\t\t\t \u2605)\n$noop(\u2605 Here is a script for music renaming\
+  \ in MusicBrainz Picard            \u2605)\n$noop(\u2605\t\t\t\t\t\t\t\t\t\t\t\t\
+  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t \u2605)\n$noop(\u2605 Note: Destination Director\
+  \ Setting                                   \u2605)\n$noop(\u2605       /Volumes/3TB/Licorice\
+  \ Pizza                                    \u2605)\n$noop(\u2605\t\t\t\t\t\t\t\t\
+  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t \u2605)\n$noop(\u2605 Features :        \
+  \                                                   \u2605)\n$noop(\u2605      \
+  \                                                                \u2605)\n$noop(\u2605\
+  \   Individualy Selectable Root Directory Organization Options:        \u2605)\n\
+  $noop(\u2605\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t \u2605)\n$noop(\u2605\
+  \ \u2022 Directories by [A]rtist Name / [N]ame, Artist or last.fm** category\u2605\
+  )\n$noop(\u2605 \u2022 subDirectory for each main type [Album/Single/EP...]    \
+  \           \u2605)\n$noop(\u2605 \u2022 Separate Root directory for compilations\
+  \ [!various]                \u2605)\n$noop(\u2605 \u2022 Single Artist Compilations\
+  \ go in Artist Directory                  \u2605)\n$noop(\u2605 \u2022 Root directory\
+  \ Audio Books, Podcasts, Others                       \u2605)\n$noop(\u2605 \u2022\
+  \ Root directory Genre PreSort                                       \u2605)\n$noop(\u2605\
+  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t \u2605)\n$noop(\u2605  ~/MusicRoot/[O]/Oingo\
+  \ Boingo/[Artist Compilations]/                 \u2605)\n$noop(\u2605  ~/MusicRoot/Compilations/K-Tel\
+  \ Hits of the 1980s Vol. 1             \u2605)\n$noop(\u2605  ~/MusicRoot/Audio\
+  \ Books/Ready Player One                            \u2605)\n$noop(\u2605  ~/MusicRoot/Podcasts/Mad\
+  \ Mad Music #29                              \u2605)\n$noop(\u2605\t\t\t\t\t\t\t\
+  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t \u2605)\n$noop(\u2605 - Alphabetize artist\
+  \ without leading \"The\"                           \u2605)\n$noop(\u2605 - Show\
+  \ Album Release Status on Album Directory                       \u2605)\n$noop(\u2605\
+  \ - Show Record Label on Directory Name Directory                      \u2605)\n\
+  $noop(\u2605 - Show Catalogue Number in Album Directory Name                   \
+  \   \u2605)\n$noop(\u2605 - Show Track Duration in Filename                    \
+  \                \u2605)\n$noop(\u2605 - Filtered character for files & directory\
+  \ naming                    \u2605)\n$noop(\u2605 - Include media type in directory\
+  \ name [when its not CD]             \u2605)\n$noop(\u2605 - Multi-Disc SubDirectory\
+  \ per Disc in Album Directory                \u2605)\n$noop(\u2605 - Custom directory\
+  \ tag for multi-disc CD/Vinyl [CD1/Disc1 by default]\u2605)\n$noop(\u2605 - Put\
+  \ multi-CD release in same directory [names become 101/102/201..]\u2605)\n$noop(\u2605\
+  \ - Vinyl can use musicbrainz style for track [A1/A2/B1...]            \u2605)\n\
+  $noop(\u2605 - File Type SubDirectory in Album Directory                       \
+  \   \u2605)\n$noop(\u2605\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\
+  \ \u2605)\n$noop(\u2605 - For Sort Directory Overrides: titlesort, artistsort, albumsort\
+  \     \u2605)\n$noop(\u2605\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\
+  \ \u2605)\n$noop(\u2605 ** Optional Plugin Needed for Last.fm [for category trending]\
+  \        \u2605)\n$noop(\u2605   -> https://github.com/fdemmer/Picard-Last.fm.ng-Plugin\
+  \             \u2605)\n$noop(\u2605\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\
+  \t\t\t\t \u2605)\n$noop(\u2605 - 'For Sort Only'                               \
+  \                     \u2605)\n$noop(\u2605   Do not format filename, optional limited\
+  \ [0m00s] [128 CBR]         \u2605)\n$noop(\u2605\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\
+  \t\t\t\t\t\t\t\t\t\t\t \u2605)\n$noop(\u2605 - DevMode:                        \
+  \                                   \u2605)\n$noop(\u2605   Allows better simulation\
+  \ control of variables for debugging        \u2605)\n$noop(\u2605\t\t\t\t\t\t\t\t\
+  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t \u2605)\n$noop(\u2605 Do Not Taunt The Happy\
+  \ Tagging Ball                                  \u2605)\n$noop(\u2605\t\t\t\t\t\t\
+  \t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t \u2605)\n$noop(\u2605----------------------------------------------------------------------\u2605\
+  )\n$noop(\u2605   Based on the MBP Magic Script  By Ski-lleR                   \
+  \      \u2605)\n$noop(\u2605   Thanks to avibrazil for his filter              \
+  \                   \u2605)\n$noop(\u2605 > https://github.com/avibrazil/picard-scripting\
+  \                      \u2605)\n$noop(\u2605----------------------------------------------------------------------\u2605\
+  )\n$noop(\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\
+  \u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\
+  \u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\
+  \u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\
+  \u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\u2605\
+  \u2605\u2605\u2605\u2605)\n$noop(\u2605 INSERT COIN \u2605)\n \n$noop(Configuration\
+  \ Section - 0-Disable / 1-Enable)\n\n$noop(\u2605 For Development Only -  \u2605\
+  )\n$noop(\u2605 Variable Settings in Subsections      - \u2605)\n$noop(\u2605  -\
+  \ Audio Metrics Only at this Time    - \u2605)\n$noop(\u2605 This should be 0 for\
+  \ proper function! - \u2605)\n$set(_devMode,0)\n\n$noop(\u2605 For Sort Only. No\
+  \ Filename Formatting - \u2605)\n$noop(\u2605   Usually for When Saving from Left\
+  \   - \u2605)\n$noop(\u2605   It's RARE that you would want this  - \u2605)\n$noop(\u2605\
+  \   Usually for When Saving from Left   - \u2605)\n$set(_quickNoNameFormat,0)\n\n\
+  \n$noop(\u2605 GLOBAL SETTINGS - Things you're likely to want to configure \u2605\
+  )\n\n$noop(  /Licorice Pizza/B/B-52s, The/EP/Wild Planet\u2236 2007 Remix EP [CD]\
+  \ [2007] [Promotion] [Planet Clique] [SSMCD005] )\n$noop(  /Licorice Pizza/B/B-52s,\
+  \ The/EP/Wild Planet\u2236 2007 Remix EP [CD] [_showDate] [_showReleaseStatus] [_showRecordLabel]\
+  \ [_showCatalogueNumber] )\n$noop(Configuration Section - 0-Disable / 1-Enable)\n\
+  $set(_showRecordLabel,0)\n$set(_showDate,1)\n$set(_showReleaseStatus,0)\n$set(_showCatalogueNumber,0)\n\
+  \n$noop(\u2605 Values Included before File Ext. \u2605)\n$noop(  01. Quiche Lorraine\
+  \ [S-Express remix][5\u223654][320 44100KHz CBR 2ch].m4a  )\n$noop(  01. Quiche\
+  \ Lorraine [S-Express remix][_showTime][_showBandwidth].m4a   )\n$if($eq(%_quickNoNameFormat%,1),$set(_showTime,0),$set(_showTime,1))\n\
+  $if($eq(%_quickNoNameFormat%,1),$set(_showBandwidth,0),$set(_showBandwidth,1))\n\
+  \n\n$noop(\u2605 Sort orderTypeForRoot                      \u2605)\n$noop(\u2605\
+  \ ~/Music/Last.fm Genre/A/Artist/AlbumTitle/ \u2605)\n$noop(\u2605  1: Category\
+  \ [Last.fm.ng]   \u2605)\n$noop(\u2605 ~/Music/A/Artist/AlbumTitle/\u2605)\n$noop(\u2605\
+  \  2: Artist first letter     \u2605)\n$set(_orderTypeForRoot,2)\n\n$noop(\u2605\
+  \ Sort orderTypeForArtist                \u2605)\n$noop(\u2605  1: First letter\
+  \ of first name         \u2605)\n$noop(\u2605 ~/Music/M/Music Artist/AlbumTitle/\
+  \     \u2605)\n$noop(\u2605  2: First letter of last name          \u2605)\n$noop(\u2605\
+  \ ~/Music/A/Artist, Music/AlbumTitle/    \u2605)\n$noop(\u2605  3: No Sub-Separation\
+  \ by Artist Initial\u2605)\n$noop(\u2605 ~/Music/Artist, Music/AlbumTitle/     \
+  \ \u2605)\n$set(_orderTypeForArtist,1)\n\n$noop(\u2605 How to designate Complete\
+  \ Albums that contain multiples/extras of at least 1 Track      \u2605)\n$noop(\u2605\
+  \ 1  They are Sorted as Complete. will show silver starred but not Gold icon on\
+  \ the Right \u2605)\n$noop(\u2605 0, They are Sorted as InComplete \u2605)\n\n$set(_extraTrackHandling,1)\n\
+  \n$noop(\u2605 1  Earlier in the Sort Artist Diversion?    \u2605)\n$set(_earlierLevelArtistSeparation,0)\n\
+  $noop(\u2605 0  Earlier in the Sort Incomplete Diversion?\u2605)\n$set(_earlierPresortForIncompletes,1)\n\
+  \n$noop(\u2605 Do you want separation by type / extension at the Root Level?\u2605\
+  )\n$noop(\u2605 ~/Music/MP3/AlbumTitle/ - ~/Music/FLAC/AlbumTitle/ - ~/Music/M4A/AlbumTitle/\
+  \ - ~/Music/WNA/AlbumTitle/ \u2605)\n$set(_rootLevelTypeSeparation,0)\n\n$noop(\u2605\
+  \ Do you want separatation by type / extension at the Album Level?             \
+  \                         \u2605)\n$noop(\u2605 ~/Music/AlbumTitle/MP3/ - ~/Music/AlbumTitle/FLAC/\
+  \ - ~/Music/AlbumTitle/M4A - ~/Music/AlbumTitle/WNA/ \u2605)\n$set(_albumLevelTypeSeparation,0)\n\
+  \n$noop(\u2605 Do you want the Album Title added before the type / extension after\
+  \ the Album Level?                         \u2605)\n$noop(\u2605 ~/Music/AlbumTitle/AlbumTitle\
+  \ MP3/ - ~/Music/AlbumTitle/AlbumTitle FLAC/ - ~/Music/AlbumTitleAlbumTitle /M4A\
+  \ \u2605)\n$set(_albumNameAtTypeSeparation,0)\n\n$noop(\u2605 Root Level Sort Against\
+  \ Select Genre Values. \u2605)\n$noop(\u2605 ~/Music/GenreSubSortDirectory/AlbumTitle/AlbumTitle\
+  \ MP3/Single/ - ~/Music/GenreSubSortDirectory/AlbumTitle/AlbumTitle FLAC/EP/ \u2605\
+  )\n$set(_isSubSort,1)\n\n$noop(Album Name/EP/Single/Live/Album etc.)\n$noop(\u2605\
+  \ ~/Music/AlbumTitle/AlbumTitle MP3/Single/ - ~/Music/AlbumTitle/AlbumTitle FLAC/EP/\
+  \ \u2605)\n$set(_separateByTypeInArtistDirectory,1)\n\n$noop(\u2605 Do you want\
+  \ Tribute and Cover Albums Placed with Artist being attributed? \u2605)\n$noop(\u2605\
+  \ ~/Music/AlbumTitle/AlbumTitle MP3/Cover/ - ~/Music/AlbumTitle/AlbumTitle FLAC/Tribute/\
+  \ \u2605)\n$noop(\u2605 Requires coverTributeSort tag and albumartistsort Tags \u2605\
+  )\n$noop(Set a coverTributeSort tag value of \u201CTribute\u201D or \u201CCover\u201D\
+  .)\n$noop(Enter the associated Artist in the AlbumArtistSort as tag.)\n$set(_altArtistSort,1)\n\
+  \n$set(_separateAlbum,0) $noop(Albums in SubDirectory as well)\n$noop(\u2605 ~/Music/A/Artist/AlbumTitle,\
+  \ ~/Music/A/Artist/Albums/AlbumTitle \u2605)\n\n$set(_showTrackArtistSeparation,0)\
+  \ $noop(Breakdown by Artist within Album ** Special Case Use / Usually Left Side\
+  \ Compilations)\n$noop(\u2605 ~/Music/A/Artist/AlbumTitle/Artist/Track, ~/Music/A/Artist/Albums/AlbumTitle/Artist/Track\
+  \ \u2605)\n\n$set(_compilationsGSubDirectory,Compilations/)\n$noop(\u2605 ~/Music/Compilations/\
+  \  \u2605)\n\n$noop(\u2605 SOUNDTRACK/VARIOUS DIRECTORY \u2605)\n$set(_soundTracksDirectory,_soundtrack/)\n\
+  $set(_variousArtistsDirectory,_various/)\n$set(_audiobooksDirectory,_audiobook/)\n\
+  $set(_incompleteDirectory,_partial)\n$set(_podcastSubDirectory,_podcast/)\n\n$noop(\u2605\
+  \ Multi-Disc \u2605)\n\n$noop(\u2605 ~/Music/A/Artist, Music/AlbumTitle/Disc01/01\
+  \ - Tracklist \u2605)\n$set(_useSubDiscDirectory,1)\n\n$noop(\u2605 ~/Music/A/Artist,\
+  \ Music/AlbumTitle/01 - Tracklist ***SKIP SubDiscDirectory if only one Medium in\
+  \ Realease \u2605)\n$set(_mergeDiscWhenNotUsingSubDirectory,0)\n\n$set(_showDiscSubtitle,1)\n\
+  $set(_nameForTypeCD,disc)\n$set(_nameForTypeVinyl,side)\n\n$noop(\u2605 ~/Music/A/Artist,\
+  \ Music/AlbumTitle/A1 ,A2 ,B1, B2 Tracklist - \u2605)\n$set(_useMusicBrainzStyleForVinylTrack,1)\n\
+  \n$noop(\u2605 Custom Subdirectory Titles at Artist Level \u2605)\n$noop(\u2605\
+  \ ~/Music/A/Artist, Music/EP/AlbumTitle ~/Music/A/Artist, Music/Live/AlbumTitle\
+  \ \u2605)\n\n$set(_albumSubDirectory,_albums/)\n$set(_compilationsASubDirectory,_compilation/)\n\
+  $set(_coverSubDirectory,_cover/)\n$set(_tributeSubDirectory,_tribute/)\n$set(_singlesSubDirectory,_singles/)\n\
+  $set(_liveSubDirectory,_live/)\n$set(_epSubDirectory,_EP/)\n$set(_broadcastSubDirectory,_broadcast/)\n\
+  $set(_interviewSubDirectory,_interview/)\n$set(_videoSubDirectory,_video/)\n$set(_otherSubDirectory,_other/)\n\
+  $set(_dupesDirectory,_duplicates/)\n$set(_exportDirectory,_exports/)\n$set(_extDirectory,%_extension%/)\n\
+  \n$noop(\u2605 _subSortXXXX are pretty specific        \u2605)\n$noop(\u2605 breakdowns\
+  \ that require setting a value \u2605)\n$noop(\u2605 with a tag titled    %genresort%\
+  \        \u2605)\n$noop(\u2605 These can be ignored or reduced, just   \u2605)\n\
+  $noop(\u2605 keep at least one for an example incase \u2605)\n$noop(\u2605 You want\
+  \ to sort like this later.       \u2605)\n$noop(\u2605 /LicoricePizza/_subSortXXXX/\
+  \ ....       \u2605)\n\n$set(_subSortGame,\u2022Arcade/)\n$set(_subSortDJBits,\u2022\
+  DJBits/)\n$set(_subSortClassical,Classical/)\n$set(_subSortDemento,Dementia/)\n\
+  $set(_subSort12Inch,\u202212 Inch Mix/)\n$set(_subSortDisney,Disney/)\n$set(_subSortPodcast,Podcast/)\n\
+  $set(_subSortInterview,\u2022Interview/)\n$set(_subSortBroadcast,Broadcast/)\n$set(_subSortReserved,\u2022\
+  Singles Candidates/)\n$set(_subSortPreTag,\u2022No MBID/)\n$set(_subSortHoliday,Holiday/)\n\
+  $set(_subSortCountry,Country/)\n$set(_subSortBlues,Blues/)\n$set(_subSortJazz,Jazz/)\n\
+  $set(_subSort2Oct,Spooktacular/)\n$set(_subSort2Nov,Fallback/)\n$set(_subSort2Dec,Here\
+  \ Comes Santa/)\n$set(_subSort2Jan,Wintertime/)\n$set(_subSort2Feb,Will You Be My\
+  \ Valentine?/)\n$set(_subSort2Mar,Spring is in the Air/)\n$set(_subSort2Apr,Foolish/)\n\
+  $set(_subSort2May,Maybe/)\n$set(_subSort2June,SumSumSummertime/)\n$set(_subSort2July,Fireworks\
+  \ & Stuff/)\n$set(_subSort2Aug,SumSumSummertime/)\n$set(_subSort2Sept,SumSumSummertime/)\n\
+  \n$noop(\u2605 Detect Genre/SubSort Destinations for above values \u2605)\n\n$if($in(%genresort%,Holiday),$set(_subSortDirectory,%_subSortHoliday%))\n\
+  $if($in(%genresort%,*-*),$set(_subSortDirectory,%_subSortReserved%))\n$if($in(%genresort%,***),$set(_subSortDirectory,%_subSortPreTag%))\n\
+  $if($in(%genresort%,Novelty),$set(_subSortDirectory,%_subSortDemento%))\n$if($in(%genresort%,DJ\
+  \ Bits),$set(_subSortDirectory,%_subSortDJBits%))\n$if($in(%genresort%,Humo),$set(_subSortDirectory,%_subSortDemento%))\n\
+  $if($in(%genresort%,Demento),$set(_subSortDirectory,%_subSortDemento%))\n$if($in(%genresort%,Comedy),$set(_subSortDirectory,%_subSortDemento%))\n\
+  $if($in(%genresort%,FuMP),$set(_subSortDirectory,%_subSortDemento%))\n$if($in(%genresort%,Game),$set(_subSortDirectory,%_subSortGame%))\n\
+  $if($in(%genresort%,Disney),$set(_subSortDirectory,%_subSortDisney%))\n$if($in(%genresort%,odcast),$set(_subSortDirectory,%_subSortPodcast%))\n\
+  $if($in(%genresort%,nterview),$set(_subSortDirectory,%_subSortInterview%))\n$if($in(%genresort%,roadcast),$set(_subSortDirectory,%_subSortBroadcast%))\n\
+  $if($in(%genresort%,12 Inch),$set(_subSortDirectory,%_subSort12Inch%))\n$if($in(%genresort%,Classical),$set(_subSortDirectory,%_subSortClassical%))\n\
+  $if($in(%genresort%,Country),$set(_subSortDirectory,%_subSortCountry%))\n$if($in(%genresort%,Spook),$set(_subSort2Directory,%_subSort2May%))\n\
+  $if($in(%genresort%,Fall),$set(_subSort2Directory,%_subSort2Nov%))\n$if($in(%genresort%,Summer),$set(_subSort2Directory,%_subSort2June%))\n\
+  $if($in(%genresort%,Firew),$set(_subSort2Directory,%_subSort2July%))\n$if($in(%genresort%,Fool),$set(_subSort2Directory,%_subSort2Apr%))\n\
+  $if($in(%genresort%,Maybe),$set(_subSort2Directory,%_subSort2May%))\n$if($in(%genresort%,Spring),$set(_subSort2Directory,%_subSort2Mar%))\n\
+  $if($in(%genresort%,Santa),$set(_subSort2Directory,%_subSort2Dec%))\n$if($in(%genresort%,Blues),$set(_subSortDirectory,%_subSortBlues%))\n\
+  $if($in(%genresort%,Jazz),$set(_subSortDirectory,%_subSortJazz%))\n\n$noop(#######################\
+  \ Scratch Space ######################)\n$noop(\u2605 Unless you're changing appearances,\
+  \ there isn't really anything to do past here \u2605)\n$noop(#######################\
+  \ END SETTINGS #######################)\n\n\n$noop(########## DETECT MUSIC TYPE\
+  \ ###############################)\n\n$noop(\u2605 Detect Album \u2605)\n$if($in(%releasetype%,album),\n\
+  \  $set(_isAlbum,1)\n)\n$noop(\u2605 Detect Single \u2605)\n$if($in(%releasetype%,single),\n\
+  \  $set(_isSingle,1)\n)\n$noop(\u2605 Detect Live \u2605)\n$if($in(%releasetype%,live),\n\
+  \  $set(_isLive,1)\n)\n$noop(\u2605 Detect EP \u2605)\n$if($in(%releasetype%,ep),\n\
+  \  $set(_isEP,1)\n)\n$noop(\u2605 Detect Broadcast \u2605)\n$if($in(%releasetype%,broadcast),\n\
+  \  $set(_isBroadcast,1)\n)\n$noop(\u2605 Detect Interview \u2605)\n$if($in(%releasetype%,interview),\n\
+  \  $set(_isInterview,1)\n)\n$noop(\u2605 Detect Artist Compilation \u2605)\n$if($in(%releasetype%,compilation),\n\
+  \  $set(_isArtistCompil,1)\n)\n$noop(\u2605 Detect Audiobook \u2605)\n$if($in(%releasetype%,audiobook),\n\
+  \  $set(_isAudiobook,1)\n)\n$noop(\u2605 Detect Other \u2605)\n$if($in(%releasetype%,other),\n\
+  \  $set(_isOther,1)\n)\n$noop(\u2605 Detect Tribute \u2605)\n$if($in(%coverTributeSort%,Tribute),\n\
+  \  $set(_isTribute,1)\n)\n$noop(\u2605 Detect Cover \u2605)\n$if($in(%coverTributeSort%,Cover),\n\
+  \  $set(_isCover,1)\n)\n$noop(\u2605 Detect Podcast \u2605)\n$if($in(%genre%,Podcast),\n\
+  \  $set(_isPodcast,1)\n)\n$noop(\u2605 Detect Soundtrack \u2605)\n$if($in(%releasetype%,soundtrack),\n\
+  \  $set(_isSoundTrack,1)\n)\n$noop(\u2605 Detect BitRate Split \u2605)\n$if($in(%BitRateSplit%,Yes),\n\
+  \  $set(_addBitRate,1)\n)\n$noop(\u2605 Detect Incomplete \u2605)\n$if($eq($is_complete(),0),\n\
+  \  $set(_isIncomplete,1)\n)\n$noop(\u2605 Detect Video \u2605)\n$if($eq($is_video(),0),\n\
+  \  $set(_isVideo,1)\n)\n$noop(\u2605 Detect Various Artist \u2605)\n$if($eq(%albumartist%,Various\
+  \ Artists),\n  $set(_isVarious,1)\n)\n$noop(\u2605 Re-detect Compilation Type \u2605\
+  )\n$if($eq(%compilation%,1),\n  $set(_isGlobalCompil,1)\n)\n$noop(\u2605 Detect\
+  \ Global Compilation \u2605)\n$if($eq(%_isGlobalCompil%,1), $set(_isArtistCompil,0)\n\
+  )\n$noop(\u2605 Get Track Length \u2605)\n$if($eq(%_showTime%,1),\n  $set(_trackLength,%_length%)\n\
+  )\n$noop(\u2605 Drop Unused Placeholder Tags \u2605)\n$if($eq(%title%,Title),$delete(title)$delete(titlesort))\n\
+  $if($eq(%subtitle%,Subtitle),$delete(subtitle))\n$if($eq(%discsubtitle%,DiscSubtitle),$delete(discsubtitle))\n\
+  $if($eq(%artists%,Artist;AdditionalArtists),$delete(artists))\n$if($eq(%artistssortorder%,Artist),$delete(artistssortorder))\n\
+  $if($eq(%album%,Album),$delete(album)$delete(albumsort)$delete(albumartistsort)$delete(albumartist))\n\
+  $if($eq(%media%,Media),$delete(media))\n$if($eq(%label%,Label),$delete(label))\n\
+  $if($eq(%catalognumber%,Cat#),$delete(catalognumber))\n\n$noop(########## Start\
+  \ File Naming Structure Variables ###########)\n$noop(sorted by artist place holder)\n\
+  $noop(\u2022ByBitRate/%bitrate%)\n$noop(\u2605 Typography on file naming only \u2605\
+  )\n$set(_titleForFilename,$if2(%titlesort%,%title%))\n$set(_albumForFilename,$if2(%albumsort%,%album%))\n\
+  \n$set(_discsubtitleForFilename,%discsubtitle%)\n$set(_albumartistForFilename,$if2(%albumartist%,%artist%))\n\
+  $set(_artistForFilename,%artist%)\n$set(_albumartistsortForFilename,$if2(%albumartistsort%,%artistsort%,%artist%))\n\
+  $set(_artistsortForFilename,$if2(%artistsort%,%artist%))\n\n$noop(########## Start\
+  \ TAG Manipulation ##########################)\n$noop(\u2605 Organize artist by\
+  \ alphabetical Directories excluding leading The \u2605)\n$set(albumartist,$if($eq($left(%albumartist%,4),The\
+  \ ),%albumartistsort%,%albumartist%))\n$noop($set(undersc0riginalFileName,%_filename%))\n\
+  \n$noop(########## Start TAG Formatting  ###########################)\n$noop(\u2605\
+  \ Typography for tags: changes will affect tags on media \u2605)\n\n$noop(\u2605\
+  \ ... \u27A1 \u2026)\n$set(album,$replace(%album%,...,\u2026))\n$set(title,$replace(%title%,...,\u2026\
+  ))\n$set(discsubtitle,$replace(%discsubtitle%,...,\u2026))\n\n$noop(\u2605 No. \u27A1\
+  \ \u2116)\n$set(album,$replace(%album%, [Nn]o.\\\\s*\\(\\\\d\\), \u2116\\\\1))\n\
+  $set(title,$rreplace(%title%, [Nn]o.\\\\s*\\(\\\\d\\), \u2116\\\\1))\n$set(discsubtitle,$replace(%discsubtitle%,\
+  \ [Nn]o.\\\\s*\\(\\\\d\\), \u2116\\\\1))\n\n$noop(\u2605 [digit]\" \u27A1 [digit]\u2033\
+  )\n$set(discsubtitle,$rreplace(%discsubtitle%,\\(\\\\d\\)\",\\\\1''))\n\n$noop(\u2605\
+  \ \"12\" Vinyl\" \u27A1 \"12 Inch Vinyl\")\n$set(media,$rreplace(%media%,\\(\\\\\
+  d\\)\",\\\\1 Inch))\n$set(album,$rreplace(%album%,\\(\\\\d\\)\",\\\\1 Inch))\n$set(title,$rreplace(%title%,\\\
+  (\\\\d\\)\",\\\\1 Inch))\n\n$noop(\u2605 \"something\" \u27A1 \u201Csomething\u201D\
+  \ single quote for server/samba)\n$set(albumartist,$rreplace(%albumartist%,\"\\\
+  (.*?\\)\",'\\\\1'))\n$set(artist,$rreplace(%artist%,\"\\(.*?\\)\",'\\\\1'))\n$set(albumartistsort,$rreplace(%albumartistsort%,\"\
+  \\(.*?\\)\",'\\\\1'))\n$set(artistsort,$rreplace(%artistsort%,\"\\(.*?\\)\",'\\\\\
+  1'))\n$set(album,$rreplace(%album%,\"\\(.*?\\)\",'\\\\1'))\n$set(title,$rreplace(%title%,\"\
+  \\(.*?\\)\",'\\\\1'))\n$set(discsubtitle,$rreplace(%discsubtitle%,\"\\(.*?\\)\"\
+  ,'\\\\1'))\n\n$noop(\u2605 # \u27A1 \u266F)\n$set(_titleForFilename,$replace(%_titleForFilename%,#,\u266F\
+  ))\n$set(_albumForFilename,$replace(%_albumForFilename%,#,\u266F))\n$set(_discsubtitleForFilename,$replace(%_discsubtitleForFilename%,#,\u266F\
+  ))\n\n$noop(\u2605 ;: \u27A1 h, m,)\n$set(_trackLength,$replace(%_trackLength%,:,\u2236\
+  ))\n\n$noop(\u2605 : \u27A1 \u2236)\n$set(_titleForFilename,$replace(%_titleForFilename%,:,\u2236\
+  ))\n$set(_albumForFilename,$replace(%_albumForFilename%,:,\u2236))\n$set(_discsubtitleForFilename,$replace(%_discsubtitleForFilename%,:,\u2236\
+  ))\n$set(_artistForFilename,$replace(%_artistForFilename%,:,\u2236))\n$set(_albumartistForFilename,$replace(%_albumartistForFilename%,:,\u2236\
+  ))\n$set(_artistsortForFilename,$replace(%_artistsortForFilename%,:,\u2236))\n$set(_albumartistsortForFilename,$replace(%_albumartistsortForFilename%,:,\u2236\
+  ))\n\n$noop(\u2605 ? \u27A1 \u2047)\n$set(_titleForFilename,$replace(%_titleForFilename%,?,\u2047\
+  ))\n$set(_albumForFilename,$replace(%_albumForFilename%,?,\u2047))\n$set(_discsubtitleForFilename,$replace(%_discsubtitleForFilename%,?,\u2047\
+  ))\n$set(_artistForFilename,$replace(%_artistForFilename%,?,\u2047))\n$set(_artistsortForFilename,$replace(%_artistsortForFilename%,?,\u2047\
+  ))\n\n$set(_titleForFilename,$replace(%_titleForFilename%,|,\uFFE8))\n$set(_albumForFilename,$replace(%_albumForFilename%,|,\uFFE8\
+  ))\n$set(_discsubtitleForFilename,$replace(%_discsubtitleForFilename%,|,\uFFE8))\n\
+  \n$set(_titleForFilename,$replace(%_titleForFilename%,>,\uFF1E))\n$set(_albumForFilename,$replace(%_albumForFilename%,>,\uFF1E\
+  ))\n$set(_discsubtitleForFilename,$replace(%_discsubtitleForFilename%,>,\uFF1E))\n\
+  \n$set(_titleForFilename,$replace(%_titleForFilename%,<,\uFF1C))\n$set(_albumForFilename,$replace(%_albumForFilename%,<,\uFF1C\
+  ))\n$set(_discsubtitleForFilename,$replace(%_discsubtitleForFilename%,<,\uFF1C))\n\
+  \n$set(_titleForFilename,$replace(%_titleForFilename%,*,\u2731))\n$set(_albumForFilename,$replace(%_albumForFilename%,*,\u2731\
+  ))\n$set(_discsubtitleForFilename,$replace(%_discsubtitleForFilename%,*,\u2731))\n\
+  $set(_artistForFilename,$replace(%_artistForFilename%,*,\u2731))\n$set(_albumartistForFilename,$replace(%_albumartistForFilename%,*,\u2731\
+  ))\n$set(_artistsortForFilename,$replace(%_artistsortForFilename%,*,\u2731))\n$set(_albumartistsortForFilename,$replace(%_albumartistsortForFilename%,*,\u2731\
+  ))\n\n$set(_titleForFilename,$replace(%_titleForFilename%,&,\uFF06))\n$set(_albumForFilename,$replace(%_albumForFilename%,&,\uFF06\
+  ))\n$set(_discsubtitleForFilename,$replace(%_discsubtitleForFilename%,&,\uFF06))\n\
+  $set(_artistForFilename,$replace(%_artistForFilename%,&,\uFF06))\n$set(_albumartistForFilename,$replace(%_albumartistForFilename%,&,\uFF06\
+  ))\n$set(_artistsortForFilename,$replace(%_artistsortForFilename%,&,\uFF06))\n$set(_albumartistsortForFilename,$replace(%_albumartistsortForFilename%,&,\uFF06\
+  ))\n$noop(\u2605 For Development Only - Variable Settings in Subsections \u2605\
+  )\n$noop(\u2605 Where Available - Audio Metrics Only at this Time \u2605)\n\n$noop(###########\
+  \ Audio Metrics Setup  ###########################)\n$noop(########### DevMode Values\
+  \ Only ############################)\n\n$set(_devMode,0) $noop(Use Standin Data.)\n\
+  \n$set(_biitrate,71.426)\n$set(_saample_rate,44100)\n$set(_biits_per_sample,16)\n\
+  $set(_chaannels,2)\n$set(_tiitle,My Great Score)\n$noop(########### CONFIRM DevMode\
+  \ is Disabled for Live Use ########)\n\n$noop(############## Determine Bit Rate\
+  \ Integer Value #############)\n\n$if($eq(%_devMode%,1),FileBit %_biitrate% ---)\n\
+  \n$if($eq(%_devMode%,1),$set(_intBitRate,$rreplace(%_biitrate%,\\\\.\\\\d*\\$,)),$set(_intBitRate,$rreplace(%_bitrate%,\\\
+  \\.\\\\d*\\$,)))\n\n$if($eq(%_devMode%,1),IntBit %_intBitRate% ---)\n\n$if($eq(%_devMode%,1),$set(_bitRateSpeed,%_saample_rate%KHz),$set(_bitRateSpeed,%_sample_rate%KHz))\n\
+  $if($eq(%_devMode%,1),$set(_bitsPerSample,[%_biits_per_sample%]bit),$set(_bitsPerSample,[%_bits_per_sample%]bit))\n\
+  $if($eq(%_devMode%,1),$set(_audioChannels,%_chaannels%ch),$set(_audioChannels,%_channels%ch))\n\
+  $if($eq(%_devMode%,1),$set(_titleForFilename,%_tiitle%),$set(_titleForFilename,%_titleForFilename%))\n\
+  \n$set(_bitRateType,$if($eq_any(%_intBitRate%,320,256,224,192,160,128,112,96,80,64,48,40,32,24,16,8),CBR$set(_cbrRateValue,%_intBitRate%)$set(_fileCBRRate,%_intBitRate%),VBR$set(_vbrRateValue,%_intBitRate%)))\n\
+  \n$noop(Bitrate factors of 8.0 are most likely CBR with the remainder being VBR)\n\
+  \n$if($eq(%_bitRateType%,VBR),\n$if($gt(%_vbrRateValue%,339),$set(_fileVBRRate,320+),\n\
+  $if($gt(%_vbrRateValue%,319),$set(_fileVBRRate,320),\n$if($gt(%_vbrRateValue%,260),$set(_fileVBRRate,V0+),\n\
+  $if($gt(%_vbrRateValue%,220),$set(_fileVBRRate,V0),\n$if($gt(%_vbrRateValue%,191),$set(_fileVBRRate,V1),\n\
+  $if($gt(%_vbrRateValue%,170),$set(_fileVBRRate,V2),\n$if($gt(%_vbrRateValue%,150),$set(_fileVBRRate,V3),\n\
+  $if($gt(%_vbrRateValue%,140),$set(_fileVBRRate,V4),\n$if($gt(%_vbrRateValue%,130),$set(_fileVBRRate,V5),\n\
+  $if($gt(%_vbrRateValue%,120),$set(_fileVBRRate,V6),\n$if($gt(%_vbrRateValue%,95),$set(_fileVBRRate,V7),\n\
+  $if($gt(%_vbrRateValue%,69),$set(_fileVBRRate,V8),\n$if($gt(%_vbrRateValue%,44),$set(_fileVBRRate,V9),\n\
+  $set(_fileVBRRate,%_intBitRate%)\n))))))))))))))\n\n$noop(######### File Naming\
+  \ Structure Variables Complete #########)\n\n$noop(\u2605 Pathname Generation Starts\
+  \ Here \u2605)\n\n$noop(\u2605 Root level Path \u2605)\n$noop(   root = '/Volumes/Drive/Music/\
+  \ ... [Destination Directory Setting])\n$noop(   rootLevelExport Separation/%_exportssDirectory%/MP3/Artist/Album\
+  \ ...)\n$if($eq(%_rootLevelExportsSeparation%,1),%_exportDirectory%,)\n\n$noop(\
+  \   rootLevelDuplicate Separation/%_dupesDirectory%/MP3/Artist/Album ...)\n$if($eq(%_rootLevelDupeSeparation%,1),%_dupesDirectory%,)\n\
+  \n$noop(\u2605 Separate by Format at root directory \u2605)\n$noop(   rootLevelPath/MP3/Artist/Album\
+  \ ...)\n$if($eq(%_rootLevelTypeSeparation%,1),$upper(%_extension%),)\n\n$noop(\u2605\
+  \ Separate by _setSubSort against Genre tag values \u2605)\n$if($eq(%_isSubSort%,1),%_subSortDirectory%%_subSort2Directory%)\n\
+  \n$noop(   Earlier Incomplete Separation for Sorting ...)\n$if($eq(%_earlierPresortForIncompletes%,1),$if($eq($is_complete(),0),$if($lt($matchedtracks(),%_totalalbumtracks%),$if($and(%_isIncomplete%,$not($in(%SavePerfectAnyway%,yes))),\
+  \ - %_incompleteDirectory%,))),$if($and(%_isIncomplete%,$not($in(%SavePerfectAnyway%,yes))),\
+  \ - %_incompleteDirectory%,))\n$if($in(%SaveIncompleteAnyway%,yes),%_incompleteDirectory%)/\n\
+  $if($eq(%_earlierLevelArtistSeparation%,1),%_artistForFilename%/)\n\n$noop(\u2605\
+  \ Soundtrack in custom directory ,after soundtracksDirectory?? \u2605)\n$noop( \
+  \  root/*/Audio Books/Title ...)\n$noop(   root/*/Soundtracks/Title ...)\n$noop(\
+  \   root/*/Podcasts/Title ...)\n$if(%_isSoundTrack%,%_soundTracksDirectory%$left($swapprefix($if2(%albumsort%,%album%),A,An,The),1)/,/\n\
+  $if(%_isAudiobook%,%_audiobooksDirectory%$left($swapprefix($if2(%albumsort%,%album%),A,An,The),1)/,/)\n\
+  $if(%_isPodcast%,%_podcastDirectory%$left($swapprefix($if2(%albumsort%,%album%),A,An,The),1)/,/)\n\
+  \n$noop(\u2605 Various in custom directory \u2605)\n$noop(root/<*>/Various)\n\n\
+  $if(%_isVarious%,%_variousArtistsDirectory%$left($swapprefix($if2(%albumsort%,%album%),A,An,The),1)/,/\n\
+  $if(%_isGlobalCompil%,%_compilationsGSubDirectory%$left($swapprefix($if2(%albumsort%,%album%),A,An,The),1)/,/)\n\
+  \n$noop(\u2605 Order root by category \u2605)\n\t$if($eq(%_orderTypeForRoot%,1),\n\
+  \t$if2(%albumgrouping%,Unknown)\n\t)/\n\n$noop(\u2605 Order root by artist \u2605\
+  )\n$noop(root/<*>/<Last.FM=>/)\n$noop(root/<*>/D/)\n\n$if($eq(%_orderTypeForRoot%,2),\n\
+  \t$if($eq(%_orderTypeForArtist%,1),$upper($firstalphachar($if2(%_albumartistForFilename%,%_artistForFilename%),#1)),\n\
+  \t$if($eq(%_orderTypeForArtist%,2),$if(%_isGlobalCompil%,,$upper($firstalphachar($if2(%_albumartistsortForFilename%,%_artistsortForFilename%),#2)))\n\
+  \t$if($eq(%_orderTypeForArtist%,3),),../\n\t)))/\n\n\n$noop(\u2605 Artist with first\
+  \ letter of first name \u2605)\n$noop(root/<*>/B/The B-52's)\n$if($eq(%_orderTypeForArtist%,1),$if2(%_artistSort%,%_albumartistForFilename%,%_artistForFilename%))/\n\
+  \n$noop(\u2605 Artist with first letter of last name \u2605)\n$noop(root/<*>/B/B-52's,\
+  \ The)\n$if($eq(%_orderTypeForArtist%,2),$if(%_isGlobalCompil%,,$if2(%_albumartistsortForFilename%,%_artistsortForFilename%)))/\n\
+  \n$noop(\u2605 Order root by category \u2605)\n$if($eq(%_orderTypeForArtist%,3),)/\n\
+  \n$noop(\u2605 If Using Alternate Artists Directory For Covers & Tributes  **Uses\
+  \ Order for Album Artist tag \u2605)\n\n\t$noop(root/<*>/O/Oingo Boingo/[Tributes]/DeadBandsParty)\n\
+  \t$if($eq_all(%coverTributeSort%,%_altArtistSort%,%_isTribute%,1),\n\t$if2(%_artistSort%,%_albumartistForFilename%,%_artistForFilename%)\n\
+  \t)/\n\n\t$noop(root/<*>/D/DEVO/[Covers]/Devolution)\n\t$if($eq_all(%coverTributeSort%,%_altArtistSort%,%_isCover%,1),\n\
+  \t$if2(%_artistSort%,%_albumartistForFilename%,%_artistForFilename%)\n\t)/\n\t$noop(\u2605\
+  \ Organize by type \u2605)\n\t$noop(root/<*>/Y/Yes/[Live]/90125 Live)\n\t$noop(root/<*>/Y/Yes,/90125)\n\
+  \t$if($eq(%_separateByTypeInArtistDirectory%,1),\n\t\t$if($eq(%_isArtistCompil%,1),%_compilationsASubDirectory%,\n\
+  \t\t\t$if($eq(%_isLive%,1),%_liveSubDirectory%,\n\t\t\t\t$if($eq(%_isCover%,1),%_coverSubDirectory%,\n\
+  \t\t\t\t\t$if($eq(%_isTribute%,1),%_tributeSubDirectory%,\n\t\t\t\t\t\t$if($eq(%_isEP%,1),%_epSubDirectory%,\n\
+  \t\t\t\t\t\t\t$if($eq(%_isSingle%,1),%_singlesSubDirectory%,\n\t\t\t\t\t\t\t\t$if($eq(%_isBroadcast%,1),%_broadcastSubDirectory%,\n\
+  \t\t\t\t\t\t\t   \t$if($eq(%_isInterview%,1),%_interviewSubDirectory%,\n\t\t\t\t\
+  \t\t\t\t\t\t$if($eq(%_isVideo%,1),%_videoSubDirectory%,\n\t\t\t\t\t\t\t\t\t\t\t\
+  $if($eq(%_isOther%,1),%_otherSubDirectory%,\n\t\t\t\t\t\t\t\t\t\t\t\t$if($eq(%_isAlbum%,1),\n\
+  \t\t\t\t\t\t\t\t\t\t\t\t\t$if($eq(%_separateAlbum%,1),%_albumSubDirectory%))\n\n\
+  \t)))))))))))))\n\n$noop(\u2605 Bouncing off the Satellites [Vinyl] [YEAR]/ \u2605\
+  )\n$if($eq(%_showDate%,1),$if($if2(%date%,%originalyear%,%originaldate%), [$left($if2(%date%,%originalyear%,%originaldate%),4)]\
+  \ ,))\n\n$noop(root/<*>/B/B-52's, The]/Bouncing off the Satellites/ )\n%_albumForFilename%\n\
+  $noop(\u2605 Bouncing off the Satellites [Media-Type]/ \u2605)\n$noop($if($ne(%media%,CD),$if(%media%,[$rreplace(%media%,[\"\
+  \u2033], Inch)])))\n$if(%media%, [$title(%media%]),)\n\n$noop($if($and(%media%,$ne(%media%,CD)),$if($in(%media%,Vinyl),$title(\
+  \ [%media%])),$upper( [%media%])))\n\n$noop(\u2605 Bouncing off the Satellites [Vinyl]\
+  \ [1986] [Release Status]/ \u2605)\n$if(%releasestatus%,$if($eq(%_showReleaseStatus%,1),$title(\
+  \ [%releasestatus%])))\n\n$noop(\u2605 Bouncing off the Satellites [Vinyl] [1986]\
+  \ [Official] [MCA] [CAT-Number]/ \u2605)\n$if(%catalognumber%,$if($eq(%_showCatalogueNumber%,1),$title(\
+  \ [%catalognumber%])))\n\n$noop(\u2605 Bouncing off the Satellites [Vinyl] [1986]\
+  \ [Official] [MCA] [AB-DC001]/ \u2605)\n$noop(\u2605 Bouncing off the Satellites\
+  \ [Vinyl] [1986] [Official] [MCA] [AB-DC001] - Incomplete/ \u2605)\n\n$if($eq(%_extraTrackHandling%,1),$if($eq($is_complete(),0),$if($lt($matchedtracks(),%_totalalbumtracks%),$if($and(%_isIncomplete%,$not($in(%SavePerfectAnyway%,yes))),\
+  \ - %_incompleteDirectory%,))),$if($and(%_isIncomplete%,$not($in(%SavePerfectAnyway%,yes))),\
+  \ - %_incompleteDirectory%,)\n)/\n$noop(\u2605 Bouncing off the Satellites [Vinyl]\
+  \ [1986] [Official] [MCA] [AB-DC001]/ MP3 / \u2605)\n$noop(\u2605 Bouncing off the\
+  \ Satellites [Vinyl] [1986] [Official] [MCA] [AB-DC001]/ Bouncing off the Satellites\
+  \ MP3 / \u2605) \n\n$if($eq(%_albumLevelTypeSeparation%,1),$if($eq(%_albumNameAtTypeSeparation%,1),%_albumForFilename%,)$if($eq(%_addBitRate%,1),\
+  \ %_fileVBRRate%%_fileCBRRate% %_bitRateType%)$upper( %_extension%))/\n\n$noop(\u2605\
+  \ One Last Option to Sort By Author -within- a Left Side Album Compilation/ \u2605\
+  )\n$if(%artist%,$if($eq(%_showTrackArtistSeparation%,1),$title(%artist%)))\n\n$noop(\u2605\
+  \ Bouncing off the Satellites [Vinyl] [1986] [Official] [MCA] [AB-DC001]/ .../ Disc\
+  \ # \u2605)\n$if($gt(%totaldiscs%,1),$noop(\n\t)$if($lt(%totaldiscs%,10),$set(_discnumber,\
+  \ %discnumber%),$set(_discnumber,$num(%discnumber%,2)))$noop(\n\t)$if($in(%media%,Vinyl),$noop(\n\
+  \t\t)$set(_nameForDiscDirectory,@OSLASH@@OBRACKET@%_nameForTypeVinyl%%_discnumber%@CBRACKET@),$noop(\n\
+  \t\t)$set(_nameForDiscDirectory,@OSLASH@@OBRACKET@%_nameForTypeCD%%_discnumber%@CBRACKET@))$noop(\n\
+  \t\t)$if($and(%_discsubtitleForFilename%,$eq(%_showDiscSubtitle%,1)),$set(_nameForDiscDirectory,%_nameForDiscDirectory%\
+  \ - %_discsubtitleForFilename%))$noop(\n\t\t)$if($eq(%_useSubDiscDirectory%,1),$noop(\n\
+  \t\t\t)$set(_nameForDiscDirectory,$replace(%_nameForDiscDirectory%,@OSLASH@@OBRACKET@,/))$noop(\n\
+  \t\t\t)$set(_nameForDiscDirectory,$replace(%_nameForDiscDirectory%,@CBRACKET@,)),$noop(\n\
+  \t\t\t)$if($eq(%_mergeDiscWhenNotUsingSubDirectory%,1),$noop(\n\t\t\t\t)$unset(_nameForDiscDirectory),$noop(\n\
+  \t\t\t\t)$set(_nameForDiscDirectory,$replace(%_nameForDiscDirectory%,@OSLASH@@OBRACKET@,[))$noop(\n\
+  \t\t\t)$set(_nameForDiscDirectory,$replace(%_nameForDiscDirectory%,@CBRACKET@,]))$noop(\n\
+  \t\t))$noop(\n\t))$noop(\n)$if(%_nameForDiscDirectory%,%_nameForDiscDirectory%))/\n\
+  \n$noop(\u2605 Track # Title --%_filebr% -- %bitrate% -- %BRType% -- %BrVBR% --\
+  \  \u2605)\n$if($in(%media%,Vinyl),$noop(\n\t)$if($eq(%_useMusicBrainzStyleForVinylTrack%,1),$noop(\n\
+  \t\t)$if(%_musicbrainz_tracknumber%,%_musicbrainz_tracknumber%. )$noop(\n\t)),$noop(\n\
+  \t)$if(%tracknumber%,$if($gt(%totaldiscs%,1),$if($and($eq(%_useSubDiscDirectory%,0),$eq(%_mergeDiscWhenNotUsingSubDirectory%,1)),%discnumber%))$num(%tracknumber%,2)\
+  \ - ))\n\n$noop(\u2605 GAME OVER \u2605)\n\n$if($eq(%_quickNoNameFormat%,0),%_titleForFilename%,%_filename%)\n\
+  \n$noop(\u2605 Insert Coin for Extra Metrics \u2605)\n\n\n$noop(\u2605 00 CREDITS\
+  \ \u2605)\n"
+id: fe82505a-4d0e-4b0d-af44-3d0310ca7904
