@@ -1,14 +1,14 @@
 #!/usr/bin/node
 
-import path from "path";
-import { existsSync } from "node:fs";
-import readline from "node:readline";
-import { readdir, rename, realpath } from "node:fs/promises";
+import path from 'path';
+import { existsSync } from 'node:fs';
+import readline from 'node:readline';
+import { readdir, rename, realpath } from 'node:fs/promises';
 
 const src = process.argv[2];
 
-if (typeof src === "undefined" || !existsSync(src)) {
-  console.log("enter a valid src dir");
+if (typeof src === 'undefined' || !existsSync(src)) {
+  console.log('enter a valid src dir');
   process.exit(1);
 }
 
@@ -28,7 +28,7 @@ const agree = (prompt) =>
   new Promise((resolve) => {
     const rl = readline.createInterface({
       input: process.stdin,
-      output: process.stdout,
+      output: process.stdout
     });
     rl.question(prompt, (answer) => {
       rl.close();
@@ -38,15 +38,15 @@ const agree = (prompt) =>
 
 (async () => {
   const rp = await realpath(src);
-  const show = rp.split("/").pop();
+  const show = rp.split('/').pop();
   let example;
-  console.log("rp: ", rp);
-  console.log("show: ", show);
+  console.log('rp: ', rp);
+  console.log('show: ', show);
   const results = await onFilePaths(rp, async (filePath) => {
-    let episode = filePath.split("/").pop();
+    let episode = filePath.split('/').pop();
     if (/^S\d+?E\d+?\s-/.test(episode)) {
-      episode = episode.replace(/^S/, "s");
-      episode = episode.replace(/^(s\d+?)E/, "$1e");
+      episode = episode.replace(/^S/, 's');
+      episode = episode.replace(/^(s\d+?)E/, '$1e');
     }
     if (!episode.startsWith(show)) {
       episode = `${show} - ${episode}`;
@@ -55,9 +55,9 @@ const agree = (prompt) =>
     return {
       episode,
       promise: () => {
-        console.log(`renaming ${filePath.split("/").pop()} to ${episode}`);
+        console.log(`renaming ${filePath.split('/').pop()} to ${episode}`);
         rename(filePath, `${path.dirname(filePath)}/${episode}`);
-      },
+      }
     };
   });
   if (results.length < 1) {

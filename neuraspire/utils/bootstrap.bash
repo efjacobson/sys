@@ -302,25 +302,6 @@ auto_nvmrc() {
 }
 
 chpwd_functions+=( auto_nvmrc )
-
-
-if [ -z "$SSH_AGENT_PID" ]; then
-  # skip first terminal instance
-  if ! [ -f /home/"$(whoami)"/._/.keychain.activate ]; then
-    touch /home/"$(whoami)"/._/.keychain.activate
-  else
-    rm /home/"$(whoami)"/._/.keychain.activate
-    for item in /home/"$(whoami)"/.ssh/*; do
-      key="$(basename "$item")"
-      if [[ "$key" =~ (known_hosts|config|.+\.pub$) ]]; then
-        continue
-      else
-        eval "$(keychain -q --agents ssh --eval "$key")"
-      fi
-    done
-  fi
-fi
-
 EOF
 }
 
@@ -368,6 +349,7 @@ pips=(
 )
 
 aurs=(
+  visual-studio-code-bin
   dupeguru
   authy
   brother-mfc-l2710dw
