@@ -6,7 +6,7 @@ declare -r NC="${PREFIX}0m"
 declare -r GREEN="${PREFIX}0;32m"
 
 force=false
-verbose=false
+verbose=true
 while [ $# -gt 0 ]; do
   case "$1" in
   -f) force=true ;;
@@ -19,6 +19,12 @@ done
 reverse_sync_files=()
 case "$(hostname)" in
 NeurAspire)
+  reverse_sync_files+=("$HOME/.config/Code - OSS/User/settings.json")
+  ;;
+neuraspire)
+  reverse_sync_files+=("$HOME/.config/Code - OSS/User/settings.json")
+  ;;
+hbot)
   reverse_sync_files+=("$HOME/.config/Code - OSS/User/settings.json")
   ;;
 *) ;;
@@ -87,17 +93,28 @@ set_user_bin() {
   if [ false != $user_bin ]; then
     return
   fi
-  if [ 'Geriatrix' == "$(hostname)" ]; then
+
+  case "$(hostname)" in
+  'Geriatrix')
     user_bin='._/bin/path'
-    return
-  fi
-  if [ 'NeurAspire' == "$(hostname)" ]; then
+    ;;
+  'NeurAspire')
     user_bin='._/bin'
-    return
-  fi
-  if [ 'WTMZ-TMZ006298' == "$(hostname)" ]; then
+    ;;
+  'neuraspire')
+    user_bin='._/bin'
+    ;;
+  'hbot')
+    user_bin='._/bin'
+    ;;
+  'WTMZ-TMZ006298')
     user_bin='bin'
-  fi
+    ;;
+  *)
+    echo 'no bin for user!'
+    exit 1
+    ;;
+  esac
 }
 
 sync_script() {
@@ -179,13 +196,17 @@ set_identity() {
     is_NeurAspire=true
     return
   fi
+  if [ 'hbot' == "$(hostname)" ]; then
+    is_hbot=true
+    return
+  fi
   if [ 'WTMZ-TMZ006298' == "$(hostname)" ]; then
     is_WTMZ=true
   fi
 }
 
 main() {
-  local implemented=('NeurAspire' 'Geriatrix' 'WTMZ-TMZ006298')
+  local implemented=('hbot' 'neuraspire' 'NeurAspire' 'Geriatrix' 'WTMZ-TMZ006298')
   local hostname && hostname=$(hostname)
   if [[ ! " ${implemented[*]} " =~ " ${hostname} " ]]; then
     echo "not implemented for $hostname yet"

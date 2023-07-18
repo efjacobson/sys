@@ -2,10 +2,10 @@
 
 main() {
   local ignores=()
-  if [ 'WTMZ-TMZ006298' == "$(hostname)" ]; then
-    ignores+=('provisioning/docker/environment.sh')
-    ignores+=('provisioning/docker/vhost.conf.tpl')
-  fi
+  # if [ 'WTMZ-TMZ006298' == "$(hostname)" ]; then
+  #   ignores+=('provisioning/docker/environment.sh')
+  #   ignores+=('provisioning/docker/vhost.conf.tpl')
+  # fi
 
   if [ "$1" != "" ]; then
     git add "$1"

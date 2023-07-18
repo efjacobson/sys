@@ -30,11 +30,7 @@ for opt in "$@"; do
 done
 
 main() {
-  num_processes=1
-  if [ true == $nuclear ]; then
-    num_processes=0
-  fi
-  if [ $num_processes -eq "$(pgrep docker | head -n 2 | wc -l | xargs)" ]; then
+  if (! docker stats --no-stream); then
     running=false
   fi
 
