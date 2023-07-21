@@ -6,8 +6,8 @@ for item in /home/"$(whoami)"/.ssh/*; do
     if [[ "$key" =~ (known_hosts|config|.+\.pub$) ]]; then
         continue
     else
-        return_val="$(keychain -q --agents ssh --eval "$item")"
+        return_val="$item $return_val"
     fi
 done
 
-echo "$return_val"
+echo "keychain --eval $return_val"

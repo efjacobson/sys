@@ -335,6 +335,12 @@ _main() {
 
   _zoxide
 
+  # if [ -x "$(command -v tldr)"  ]; then
+  #   mkdir -p "home/$user/._/dev/git/efjacobson"
+  #   pushd "home/$user/._/dev/git/efjacobson"
+
+  # fi
+
   pamac remove -o
 
   _zshrc
@@ -349,6 +355,8 @@ pips=(
 )
 
 aurs=(
+  google-chrome
+  hw-probe
   visual-studio-code-bin
   dupeguru
   authy
@@ -363,11 +371,11 @@ aurs=(
 snaps=(
   mqtt-explorer
   spotify
-  code
   picard
 )
 
 packages=(
+  apcupsd
   arch-wiki-docs
   aws-cli-v2
   base-devel
@@ -409,7 +417,6 @@ packages=(
   sweethome3d
   syncthing
   thunderbird
-  tldr
   traceroute
   virt-manager
   virt-viewer
@@ -421,6 +428,10 @@ packages=(
   xsel
   zbar
   zip
+  yubikey-manager-qt
+  unzip
+  wireguard
+  wireguard-tools
 )
 
 _main
