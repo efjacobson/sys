@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+
+    <key>Label</key>
+    <string>com.efjacobson.sys.FOXYLQVH34LJ9.sync.plist</string>
+
+    <key>RunAtLoad</key>
+    <false/>
+
+    <key>StartInterval</key>
+    <integer>3540</integer>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/eric.jacobson/_/dev/git/efjacobson/sys/FOXYLQVH34LJ9/bin/bash/sync.bash.stderr.log</string>
+
+    <key>StandardOutPath</key>
+    <string>/Users/eric.jacobson/_/dev/git/efjacobson/sys/FOXYLQVH34LJ9/bin/bash/sync.bash.stdout.log</string>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+      <key>PATH</key>
+      <string><![CDATA[/opt/homebrew/bin:/usr/bin:/bin]]></string>
+    </dict>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/eric.jacobson/_/dev/git/efjacobson/sys/FOXYLQVH34LJ9/bin/bash</string>
+
+    <key>ProgramArguments</key>
+    <array>
+      <string>/bin/bash</string>
+      <string>sync.bash</string>
+    </array>
+  </dict>
+</plist>
