@@ -32,7 +32,7 @@ fi
 
 [ -d "${dest}" ] || mkdir "${dest}" || exit
 touch "${lockfile}"
-rsync -rltgoDq --inplace --delete --exclude={.DS_Store,node_modules,vendor} ${src}/ ${dest} && log 'synced'
+rsync -rltgoD --inplace --delete --progress --exclude={.DS_Store,node_modules,vendor} ${src}/ ${dest} && log 'synced'
 rm "${lockfile}"
 
 sleep 11

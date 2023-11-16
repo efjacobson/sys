@@ -10,7 +10,7 @@ main() {
 
   for protected in 'master' 'main' 'release-next'; do
     if [[ "${branch}" == "${protected}" ]]; then
-      echo "don't push $branch..."
+      echo "don't push ${branch}..."
       exit 1
     fi
   done
@@ -39,14 +39,12 @@ main() {
   tpl="${selfdir}/${selfname}.tpl"
 
   cp "${pre_push}" "${pre_push}.bak"
-  tail -n +2 "${pre_push}" > "${pre_push}.tail"
-  head -n 1 "${pre_push}" > "${pre_push}.head"
-  cat "${pre_push}.head" > "${pre_push}"
+  head -n 1 "${pre_push}.bak" > "${pre_push}"
   cat "${tpl}" >> "${pre_push}"
-  cat "${pre_push}.tail" >> "${pre_push}"
-  rm "${pre_push}.head"
-  rm "${pre_push}.tail"
+  tail -n +2 "${pre_push}.bak" >> "${pre_push}"
+
   git push origin "${branch}"
+
   mv "${pre_push}.bak" "${pre_push}"
 }
 
