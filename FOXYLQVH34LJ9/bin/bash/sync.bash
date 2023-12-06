@@ -12,6 +12,9 @@ log () {
   echo "${datetime}.${microseconds}Z ${1}"
 }
 
+echo ''
+log 'sync:start'
+
 self="${BASH_SOURCE[0]}"
 while [ -L "${self}" ]; do
     self_dir="$(cd -P "$(dirname "${self}")" >/dev/null 2>&1 && pwd)"
@@ -21,18 +24,19 @@ done
 self="$(readlink -f "${self}")"
 
 lockfile="${self}.lock"
-[ -e "${lockfile}" ] && log "lockfile exists" && exit
+[ -e "${lockfile}" ] && log "sync:locked" && exit
 
 dest='/Volumes/users-eric-jacobson/_'
 if ! [ -e "$(dirname $dest)" ]; then
-  log 'volume is not mounted'
+  log 'sync:unmounted'
   exit
 fi
 
-
 [ -d "${dest}" ] || mkdir "${dest}" || exit
 touch "${lockfile}"
-rsync -rltgoD --inplace --delete --progress --exclude={.DS_Store,node_modules,vendor} ${src}/ ${dest} && log 'synced'
-rm "${lockfile}"
+trap 'rm ${lockfile} && log "'"sync:exit"'" && echo "'""'"' EXIT
+log 'sync:rsync-start'
+rsync -rltgoDq --inplace --delete --exclude={.DS_Store,node_modules,vendor} ${src}/ ${dest}
+log 'sync:rsync-end'
 
 sleep 11
