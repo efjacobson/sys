@@ -1,0 +1,11 @@
+[Unit]
+Description=stufdek-startup
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecStart=/home/sphynx/_/dev/git/efjacobson/sys/stufdek/bin/bash/stufdek-startup.bash
+Type=oneshot
+
+[Install]
+WantedBy=multi-user.target
