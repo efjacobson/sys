@@ -21,7 +21,7 @@
     <key>EnvironmentVariables</key>
     <dict>
       <key>PATH</key>
-      <string><![CDATA[/opt/homebrew/bin:/usr/bin:/bin]]></string>
+      <string><![CDATA[/Users/eric.jacobson/Library/Python/3.9/bin:/opt/homebrew/bin:/usr/bin:/bin]]></string>
     </dict>
 
     <key>WorkingDirectory</key>

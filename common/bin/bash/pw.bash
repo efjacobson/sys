@@ -60,7 +60,7 @@ main() {
     fi
 
     pw=$(yq -r --arg vendor "${vendor}" --arg key "${key}" '.[$vendor].[$key]' <<<"${creds}")
-    [ "${pw}" = 'null' ] && echo "[pw] fail:\"${vendor}\"-\"${key}\" not found" && exit 1
+    [ "${pw}" = 'null' ] && echo "[pw] fail: key \"${key}\" not found for vendor \"${vendor}\"" && exit 1
 
     pbcopy < <(tr -d '\n' <<<"${pw}") && echo '[pw] success (copied to clipboard)'
     (clear_clipboard &)
