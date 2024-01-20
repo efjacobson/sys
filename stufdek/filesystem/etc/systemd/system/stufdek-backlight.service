@@ -1,0 +1,12 @@
+[Unit]
+Description=stufdek-backlight
+StartLimitIntervalSec=30
+StartLimitBurst=2
+
+[Service]
+ExecStart=/home/sphynx/_/dev/git/efjacobson/sys/stufdek/bin/bash/stufdek-backlight.bash
+Restart=on-failure
+CPUWeight=idle
+
+[Install]
+WantedBy=multi-user.target
