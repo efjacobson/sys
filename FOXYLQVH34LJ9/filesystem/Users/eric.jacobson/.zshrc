@@ -55,14 +55,27 @@ if [ -f ~/.fzf.zsh ] || [ -L ~/.fzf.zsh ]; then
   source ~/.fzf.zsh # put your options in this file, not here (just to keep it simple)
 fi
 
+list() {
+  if [ -z "$1" ]; then
+    filename="$(pwd)"
+  else
+    filename="$(realpath "${1}")"
+  fi
+  gls "${filename}" --human-readable --group-directories-first --classify --time-style=long-iso -g -o -A --hide-control-chars --color=always \
+    | tail --lines=+2 \
+    | cut -d' ' -f2- \
+    | bat --file-name="${filename}"
+}
+
 # --- aliases ---
 alias c='clear'
 alias e='exit'
-alias co='code -r'
+# alias co='code -r'
 alias gs='git status'
 alias gb='git branch'
 alias gf='git fetch'
-alias ls='gls --color=auto --human-readable --group-directories-first --classify --time-style=+"" -lA'
+# alias ls='gls --color=auto --human-readable --group-directories-first --classify --time-style=+"" -lA'
+alias ls='list'
 
 # --- pyenv ---
 export PYENV_ROOT="${HOME}/.pyenv"
@@ -82,6 +95,11 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export PATH="$HOME/_/bin:$PATH"
+
+export ANDROID_HOME="${HOME}/Library/Android/sdk"
+export PATH="${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin"
+export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
+
 
 # --- must be antepenultimate ---
 source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"

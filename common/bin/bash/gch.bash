@@ -11,13 +11,24 @@ function main() {
     exit
   fi
 
-  tmp="$(mktemp -d)"
+  mtmp="$(mktemp -d)"
+  tmp="$(dirname "${mtmp}")/git-checkout-bak-$(date +%s)-$(basename "$(pwd)")-$(basename "${mtmp}")"
+  mv "${mtmp}" "${tmp}"
+  any=false
   for file in $(git diff --name-only); do
-    rsync -R "${file}" "${tmp}/"
+    any=true
+    [ -e "${file}" ] && rsync -R "${file}" "${tmp}/"
     git checkout -q "${file}"
   done
-  (sleep 300 && rm -rf "${tmp}") &
-  echo "oopsie woopsie? the files with changes are in $tmp, they will be deleted in 5 minutes."
+  for file in $(git ls-files --others --exclude-standard); do
+    any=true
+    mv "${file}" "${tmp}/"
+  done
+  if [ "${any}" = false ]; then
+    echo 'nothing to do'
+    exit
+  fi
+  echo "oopsie woopsie? the files are in ${tmp}"
 }
 
 main "${1}"
