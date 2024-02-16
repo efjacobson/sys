@@ -28,7 +28,7 @@ for opt in "$@"; do
 done
 
 clear_clipboard() {
-    sleep 15
+    sleep 60
     pbcopy </dev/null
 }
 
@@ -62,7 +62,7 @@ main() {
     pw=$(yq -r --arg vendor "${vendor}" --arg key "${key}" '.[$vendor].[$key]' <<<"${creds}")
     [ "${pw}" = 'null' ] && echo "[pw] fail: key \"${key}\" not found for vendor \"${vendor}\"" && exit 1
 
-    pbcopy < <(tr -d '\n' <<<"${pw}") && echo '[pw] success (copied to clipboard)'
+    pbcopy < <(tr -d '\n' <<<"${pw}") && echo "[pw] success (copied ${key} for ${vendor} to clipboard)"
     (clear_clipboard &)
 }
 

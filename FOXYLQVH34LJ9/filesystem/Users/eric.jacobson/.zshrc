@@ -113,5 +113,5 @@ bindkey '^[[B' history-substring-search-down
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 # --- must be ultimate ---
-_ZO_EXCLUDE_DIRS="${HOME}:${HOME}/_/dev/git/tmz-apps"
+_ZO_EXCLUDE_DIRS="${HOME}:${HOME}/_/dev/git/tmz-apps:/Volumes"
 eval "$(zoxide init zsh)"
