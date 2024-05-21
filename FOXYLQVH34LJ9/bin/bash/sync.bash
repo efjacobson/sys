@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 log () {
   from_epoch=$(gdate -u "+%s %N")
@@ -42,51 +42,14 @@ if ! [ -d "$(dirname "${dest}")" ]; then
   exit
 fi
 
-subdir=$(yq -r '.subdir' "${self}.config")
-subdirTwo=$(yq -r '.subdirTwo' "${self}.config")
+ignore=$(yq -r '.ignore' "${self}.config")
 
 from_src=$(yq -r '.from_src' "${self}.config")
 from_dest=$(yq -r '.from_dest' "${self}.config")
 
 log 'rsync:start'
-rsync -rltgoDq --inplace --delete --exclude={.git,.DS_Store,node_modules,vendor,"${subdir}/","${subdirTwo}/","$(basename "$from_dest")"} "${src}/" "${dest}"
+rsync -rltgoDq --inplace --delete --exclude={.git,.DS_Store,node_modules,vendor,"${ignore}/","$(basename "$from_dest")"} "${src}/" "${dest}"
 rsync -rltgoDq --inplace --delete "${from_src}/" "${from_dest}"
 log 'rsync:end'
-
-dosubdir() {
-  thesubdir="${1}"
-  if ! [ -d "${dest}${thesubdir}" ]; then
-    mkdir -p "${dest}${thesubdir}"
-  fi
-
-  for f in "${src}${thesubdir}/"*; do
-    if ! [ -d "${f}" ]; then
-      continue
-    fi
-    if ! [ -f "${f}.7z" ]; then
-      continue
-    fi
-    if ! [ -f "${f}.7z.sha512" ]; then
-      continue
-    fi
-    dest_sha="${dest}${thesubdir}/$(basename "${f}").7z.sha512"
-    if ! [ -f "${dest_sha}" ]; then
-      cp -Rp "${f}.7z.sha512" "${dest}${thesubdir}/"
-      cp -Rp "${f}.7z" "${dest}${thesubdir}/"
-      log "${thesubdir}/$(basename "${f}").7z"
-    fi
-    if [ "$(cut -d' ' -f1 < "${f}.7z.sha512")" != "$(cut -d' ' -f1 < "${dest_sha}")" ]; then
-      cp -Rp "${f}.7z.sha512" "${dest}${thesubdir}/"
-      cp -Rp "${f}.7z" "${dest}${thesubdir}/"
-      log "${thesubdir}/$(basename "${f}").7z"
-    fi
-  done
-}
-
-for subdir in "${subdir}" "${subdirTwo}"; do
-  dosubdir "${subdir}"
-done
-
-cp -Rp "${src}${subdirTwo}.maps" "${dest}${subdirTwo}.maps"
 
 sleep 11

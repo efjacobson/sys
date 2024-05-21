@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 main() {
   if [ -n "${1}" ]; then

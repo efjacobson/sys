@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 undo_at_file="$(mktemp)"
 delay=10

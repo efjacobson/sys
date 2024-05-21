@@ -50,6 +50,9 @@ fi
 export PATH="$HOME/Library/Application Support/fnm:$PATH"
 eval "$(fnm env --use-on-cd)"
 
+# --- pipenv et al ---
+export PATH="$PATH:$HOME/.local/bin"
+
 # --- fzf ---
 if [ -f ~/.fzf.zsh ] || [ -L ~/.fzf.zsh ]; then
   source ~/.fzf.zsh # put your options in this file, not here (just to keep it simple)

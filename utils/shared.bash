@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 get_ext() {
   local filepath="$1"

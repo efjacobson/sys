@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 smb='/Volumes/users-eric-jacobson'
 

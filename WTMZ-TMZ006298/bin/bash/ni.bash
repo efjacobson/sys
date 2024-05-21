@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 if [[ -f .nvmrc ]]; then
 	source "$(brew --prefix nvm)"/nvm.sh

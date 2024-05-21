@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 main() {
   branch_name="${1}"

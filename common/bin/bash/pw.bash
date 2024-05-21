@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 file_name="${1}"
 shift

@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 convert_time() {
   brief=false

@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 dry_run=true
 src="$1"
