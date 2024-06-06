@@ -88,6 +88,10 @@ eval "$(pyenv init -)"
 # --- rbenv ---
 eval "$(rbenv init - zsh)"
 
+# --- git/gpg ---
+GPG_TTY=$(tty)
+export GPG_TTY
+
 # --- ...rest ---
 source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
 

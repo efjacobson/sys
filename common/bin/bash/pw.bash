@@ -62,7 +62,12 @@ main() {
     pw=$(yq -r --arg vendor "${vendor}" --arg key "${key}" '.[$vendor].[$key]' <<<"${creds}")
     [ "${pw}" = 'null' ] && echo "[pw] fail: key \"${key}\" not found for vendor \"${vendor}\"" && exit 1
 
-    pbcopy < <(tr -d '\n' <<<"${pw}") && echo "[pw] success (copied ${key} for ${vendor} to clipboard)"
+    username=$(yq -r --arg vendor "${vendor}" '.[$vendor].username' <<<"${creds}")
+    msg="[pw] success (copied ${key} for "
+    [ -n "${username}" ] && msg+="${username} for "
+    msg+="${vendor} to clipboard"
+
+    pbcopy < <(tr -d '\n' <<<"${pw}") && echo "${msg}"
     (clear_clipboard &)
 }
 
