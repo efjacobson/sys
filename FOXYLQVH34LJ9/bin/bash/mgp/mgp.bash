@@ -28,7 +28,7 @@ self_dir="$(dirname "${self}")"
 self_base_name=$(basename -- "$self")
 self_base_name="${self_base_name%.*}"
 
-env_file="${self_dir}/${self_base_name}.env."
+env_file="${self_dir}/${self_base_name}.env"
 if ! [ -e "${env_file}" ]; then
   echo "missing env file: ${env_file}"
   exit 1
