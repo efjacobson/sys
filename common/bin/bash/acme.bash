@@ -1,4 +1,5 @@
-#!/bin/bash
+#! /usr/bin/env bash
+set -e
 
 # haven't actually tried this as a script yet
 # subdomain="$1"

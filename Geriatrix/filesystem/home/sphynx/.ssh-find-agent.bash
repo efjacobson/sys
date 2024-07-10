@@ -1,4 +1,5 @@
-#!/bin/bash
+#! /usr/bin/env bash
+set -e
 
 # https://github.com/wwalker/ssh-find-agent
 

@@ -22,7 +22,8 @@ main() {
   fi
 
   hashbang=$(head -n 1 "${pre_push}")
-  if [[ "${hashbang}" != '#!/bin/bash' ]]; then
+  if [[ "${hashbang}" != '#! /usr/bin/env bash
+set -e' ]]; then
     git push origin "${branch}"
     exit
   fi

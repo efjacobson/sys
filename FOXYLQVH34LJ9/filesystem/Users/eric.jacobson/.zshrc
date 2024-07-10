@@ -1,4 +1,5 @@
-#!/bin/bash
+#! /usr/bin/env bash
+set -e
 
 # --- native options ---
 setopt correct                                                  # Auto correct mistakes
