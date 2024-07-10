@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [ -z "${1}" ]; then
-  git log
+  git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
 else
-  git log "-${1}"
+  git log "-${1}" --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 fi

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 main() {
-  git commit --amend
+  git commit -S --amend
 }
 
 main

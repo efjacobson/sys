@@ -92,6 +92,14 @@ eval "$(rbenv init - zsh)"
 # --- git/gpg ---
 export GPG_TTY=$TTY
 
+# --- react-native/android ---
+
+export JAVA_HOME='/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home'
+export ANDROID_HOME="${HOME}/Library/Android/sdk"
+export PATH="${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin"
+export PATH="${PATH}:${ANDROID_HOME}/emulator"
+export PATH="${PATH}:${ANDROID_HOME}/platform-tools"
+
 # --- ...rest ---
 source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
 
@@ -102,11 +110,6 @@ ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export PATH="$HOME/_/bin:$PATH"
-
-export ANDROID_HOME="${HOME}/Library/Android/sdk"
-export PATH="${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin"
-export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
-
 
 # --- must be antepenultimate ---
 source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
