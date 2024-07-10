@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#! /usr/bin/env bash
+set -e
 
 function main() {
   if ! [[ $(git status --porcelain) ]]; then

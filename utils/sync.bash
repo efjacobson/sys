@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#! /usr/bin/env bash
+set -e
 
 declare -r PREFIX='\033['
 declare -r RED="${PREFIX}0;31m"

@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#! /usr/bin/env bash
+set -e
 
 vendors=('tmz' 'toofab')
 apps=('amp' 'api' 'feeds' 'share' 'web' 'pbjx' 'ncr')

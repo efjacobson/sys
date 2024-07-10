@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#! /usr/bin/env bash
+set -e
 
 main() {
     cd "${SPHYNX_ROOT}" || exit 1

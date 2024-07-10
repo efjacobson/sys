@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#! /usr/bin/env bash
+set -e
 
 main() {
   local branch && branch=$(git symbolic-ref --short HEAD)

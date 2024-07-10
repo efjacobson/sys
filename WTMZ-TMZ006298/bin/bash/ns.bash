@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#! /usr/bin/env bash
+set -e
 
 source "$(brew --prefix nvm)"/nvm.sh
 nvm use

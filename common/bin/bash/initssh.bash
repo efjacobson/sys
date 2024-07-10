@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#! /usr/bin/env bash
+set -e
 
 return_val=
 for item in /home/"$(whoami)"/.ssh/*; do

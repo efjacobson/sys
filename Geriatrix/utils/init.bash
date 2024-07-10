@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#! /usr/bin/env bash
+set -e
 
 main() {
   local programs=('clonezilla' 'git-delta' 'bat' 'shfmt')
