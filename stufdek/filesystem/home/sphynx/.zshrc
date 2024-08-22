@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Use powerline
 USE_POWERLINE="true"
 
@@ -56,19 +63,8 @@ alias ls='ls --color=auto --human-readable --group-directories-first --classify 
 ! [ -e "/home/$(whoami)/_/bin" ] && mkdir -p "/home/$(whoami)/_/bin"
 PATH="/home/$(whoami)/_/bin:${PATH}"
 
-if [ -d "/home/$(whoami)/.cargo/bin" ]; then
-  PATH="${PATH}:/home/$(whoami)/.cargo/bin"
-  command -v fnm >/dev/null 2>&1 && eval "$(fnm env --use-on-cd)"
-
-  if command -v imdb-rename >/dev/null 2>&1; then
-    for dir in 'data' 'index'; do
-      if ! [ -e "/home/$(whoami)/.cache/imdb-rename/${dir}" ]; then
-        mkdir -p "/home/$(whoami)/.cache/imdb-rename/${dir}"
-      fi
-      ucdir="$(tr '[:lower:]' '[:upper:]' <<< "${dir}")"
-      export "IMDB_RENAME_${ucdir}_DIR"="/home/$(whoami)/.cache/imdb-rename/${dir}"
-    done
-  fi
+if [ -f "$HOME/.cargo/env" ]; then
+  . "$HOME/.cargo/env"
 fi
 
 [ -f /usr/share/zsh/plugins/forgit/forgit.plugin.zsh ] && source /usr/share/zsh/plugins/forgit/forgit.plugin.zsh
@@ -85,3 +81,6 @@ export PATH="${PATH}"
 
 # must come at end
 eval "$(zoxide init zsh)"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
