@@ -1,5 +1,6 @@
 #! /usr/bin/env bash
-set -e
+
+export TMZ_APPS_REGISTRY_AUTH_TOKEN="$(cat ~/.github_token.read:packages)"
 
 # --- native options ---
 setopt correct                                                  # Auto correct mistakes
@@ -10,11 +11,16 @@ setopt checkjobs
 setopt hup
 setopt numericglobsort                                          # Sort filenames numerically when it makes sense
 setopt nobeep                                                   # No beep
-setopt appendhistory                                            # Immediately append history instead of overwriting
-setopt histignorealldups                                        # If a new command is a duplicate, remove the older one
 setopt autocd                                                   # if only directory path is entered, cd there.
-setopt histignoredups
-setopt HIST_IGNORE_SPACE
+
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire a duplicate event first when trimming history.
+setopt HIST_FIND_NO_DUPS         # Do not display a previously found event.
+setopt HIST_IGNORE_ALL_DUPS      # Delete an old recorded event if a new event is a duplicate.
+setopt HIST_IGNORE_DUPS          # Do not record an event that was just recorded again.
+setopt HIST_IGNORE_SPACE         # Do not record an event starting with a space.
+setopt HIST_NO_STORE             # Don't store history commands
+setopt HIST_SAVE_NO_DUPS         # Do not write a duplicate event to the history file.
+setopt HIST_VERIFY               # Do not execute immediately upon history expansion.
 setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
 setopt SHARE_HISTORY             # Share history between all sessions.
 
@@ -80,6 +86,8 @@ alias gb='git branch'
 alias gf='git fetch'
 # alias ls='gls --color=auto --human-readable --group-directories-first --classify --time-style=+"" -lA'
 alias ls='list'
+alias nvm='fnm'
+alias nano='/opt/homebrew/bin/nano'
 
 # --- pyenv ---
 export PYENV_ROOT="${HOME}/.pyenv"
