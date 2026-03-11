@@ -16,15 +16,24 @@ function main() {
   tmp="$(dirname "${mtmp}")/git-checkout-bak-$(date +%s)-$(basename "$(pwd)")-$(basename "${mtmp}")"
   mv "${mtmp}" "${tmp}"
   any=false
-  for file in $(git diff --name-only); do
+  while read -r file; do
     any=true
     [ -e "${file}" ] && rsync -R "${file}" "${tmp}/"
     git checkout -q "${file}"
-  done
-  for file in $(git ls-files --others --exclude-standard); do
+  done < <(git diff --name-only)
+#  for file in $(git diff --name-only); do
+#    any=true
+#    [ -e "${file}" ] && rsync -R "${file}" "${tmp}/"
+#    git checkout -q "${file}"
+#  done
+  while read -r file; do
     any=true
     mv "${file}" "${tmp}/"
-  done
+  done < <(git ls-files --others --exclude-standard)
+#  for file in $(git ls-files --others --exclude-standard); do
+#    any=true
+#    mv "${file}" "${tmp}/"
+#  done
   if [ "${any}" = false ]; then
     echo 'nothing to do'
     exit

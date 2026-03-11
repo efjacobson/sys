@@ -57,6 +57,9 @@ fi
 export PATH="$HOME/Library/Application Support/fnm:$PATH"
 eval "$(fnm env --use-on-cd)"
 
+# brew (for rsync, initially)
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+
 # --- pipenv et al ---
 export PATH="$PATH:$HOME/.local/bin"
 
@@ -90,13 +93,12 @@ alias nvm='fnm'
 alias nano='/opt/homebrew/bin/nano'
 
 # --- pyenv ---
-export PYENV_ROOT="${HOME}/.pyenv"
-command -v pyenv >/dev/null || export PATH="${PYENV_ROOT}/bin:${PATH}"
-eval "$(pyenv init -)"
+# export PYENV_ROOT="${HOME}/.pyenv"
+# command -v pyenv >/dev/null || export PATH="${PYENV_ROOT}/bin:${PATH}"
+# eval "$(pyenv init -)"
 
 # --- rbenv ---
 eval "$(rbenv init - zsh)"
-
 
 # --- git/gpg ---
 export GPG_TTY=$TTY
@@ -108,6 +110,13 @@ export ANDROID_HOME="${HOME}/Library/Android/sdk"
 export PATH="${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin"
 export PATH="${PATH}:${ANDROID_HOME}/emulator"
 export PATH="${PATH}:${ANDROID_HOME}/platform-tools"
+
+# bun completions
+[ -s "/Users/eric.jacobson/.bun/_bun" ] && source "/Users/eric.jacobson/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
 
 # --- ...rest ---
 source "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
