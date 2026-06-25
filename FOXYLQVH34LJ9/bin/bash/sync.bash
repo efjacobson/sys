@@ -1,5 +1,6 @@
 #! /usr/bin/env bash
 set -e
+set -x
 
 log () {
   from_epoch=$(gdate -u "+%s %N")
@@ -49,8 +50,8 @@ from_src=$(yq -r '.from_src' "${self}.config")
 from_dest=$(yq -r '.from_dest' "${self}.config")
 
 log 'rsync:start'
-rsync -rltgoDq --inplace --delete --exclude={.git,.DS_Store,node_modules,vendor,"${ignore}/","$(basename "$from_dest")"} "${src}/" "${dest}"
-rsync -rltgoDq --inplace --delete "${from_src}/" "${from_dest}"
+rsync -rltgoD --progress --verbose --inplace --delete --exclude={.git,.DS_Store,node_modules,vendor,"${ignore}/","$(basename "$from_dest")"} "${src}/" "${dest}"
+rsync -rltgoD --progress --verbose --inplace --delete "${from_src}/" "${from_dest}"
 log 'rsync:end'
 
 sleep 11

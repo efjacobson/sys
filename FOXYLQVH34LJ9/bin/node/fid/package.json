@@ -1,0 +1,13 @@
+{
+  "name": "fid",
+  "version": "0.0.1",
+  "description": "fid: fix idea directories",
+  "main": "fid.bash",
+  "scripts": {
+    "fid": "./fid.bash"
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "xml2js": "^0"
+  }
+}
